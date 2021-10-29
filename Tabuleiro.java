@@ -19,7 +19,21 @@ public class Tabuleiro {
 		   }	      
     }
   }
+  public int getLine() {
+		return line;
+	}
 
+	public void setLine(int line) {
+		this.line = line;
+	}
+
+	public int getColum() {
+		return colum;
+	}
+
+	public void setColum(int colum) {
+		this.colum = colum;
+	}
   /**
   // Mudar para uma classe jogo
 	public void choseDificult(int dificult) {
