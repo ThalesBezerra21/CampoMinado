@@ -2,6 +2,14 @@ import java.util.Scanner;
 
 public class Jogo {
 	
+  public Jogo() {	
+		int escolha = 0;
+		while(escolha < 5){
+			startGame();
+			escolha++;
+		}
+	}
+
 	public static void choosePlace(Tabuleiro tab) {
 		Scanner l = new Scanner(System.in);
 		System.out.println("Choose a line: ");
@@ -13,7 +21,6 @@ public class Jogo {
 		
 		tab.openCell(line, column);
 		tab.printCampoMinado();
-		
 	}
 		
 	public static void startGame(){
@@ -42,15 +49,6 @@ public class Jogo {
 				System.out.println();
 				System.out.println("This level does not exist! Try again.");
 				}			
-	}
-	
-	public static void main(String[] args) {	
-		int escolha = 0;
-		while(escolha < 5){
-			startGame();
-			escolha++;
-		}
-		 	
 	}
 }
 

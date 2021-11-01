@@ -30,6 +30,7 @@ class Main {
     cell1.printCell();
     **/
 
+  /**
     Tabuleiro tab = new Tabuleiro(8, 8);
     tab.printCampoMinado();
 
@@ -42,5 +43,8 @@ class Main {
 
     tab.openCell(4, 3);
     tab.printCampoMinado();
+    **/
+
+    Jogo jogo = new Jogo();
   }
 }
