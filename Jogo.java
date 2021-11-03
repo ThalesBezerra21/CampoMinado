@@ -11,16 +11,19 @@ public class Jogo {
 	}
 
 	public static void choosePlace(Tabuleiro tab) {
-		Scanner l = new Scanner(System.in);
-		System.out.println("Choose a line: ");
-		int line = l.nextInt();
+    while(true){
+      Scanner l = new Scanner(System.in);
+		  System.out.println("Choose a line: ");
+	  	int line = l.nextInt();
 		
-		Scanner c = new Scanner(System.in);
-		System.out.println("Choose a column: ");
-		int column = c.nextInt();
+		  Scanner c = new Scanner(System.in);
+		  System.out.println("Choose a column: ");
+		  int column = c.nextInt();
 		
-		tab.openCell(line, column);
-		tab.printCampoMinado();
+	  	tab.openCell(line, column);
+	  	tab.printCampoMinado();
+    }
+    
 	}
 		
 	public static void startGame(){

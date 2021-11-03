@@ -1,38 +1,53 @@
+import java.util.*;
+
 public class Tabuleiro {
 
-	private int line;
-	private int colum;
+	private int lines;
+	private int columns;
 	private Cell[][] campoMinado;
 
 	public Tabuleiro(int lines, int columns) {
+	  this.lines = lines;
+	  this.columns = columns;
+	  campoMinado = new Cell[this.lines][this.columns];
+    fillTabuleiro();
+  }
 
-	this.line = lines;
-	this.colum = columns;
-	campoMinado = new Cell[this.line][this.colum];
-	
-	for(int i = 0; i < lines; i++)	  {
-		   for(int j = 0; j < columns; j++)
-		   {
-         // PARA FAZER
-			   campoMinado[i][j] = new Cell(false);
-         
-		   }	      
+  public void fillTabuleiro(){
+
+    //Put bombs
+    for(int k = 0; k < 10; k++){
+      Random rand = new Random();
+      int bombX = rand.nextInt(this.lines);
+      int bombY = rand.nextInt(this.columns);
+      campoMinado[bombX][bombY] = new Bomb(); 
+    }
+
+    //Put no bombs
+	  for(int i = 0; i < this.lines; i++){
+		  for(int j = 0; j < this.columns; j++)
+		    { 
+          if(campoMinado[i][j] == null){
+            campoMinado[i][j] = new CellSafe(); 
+          } 
+		    }	      
     }
   }
+
   public int getLine() {
-		return line;
+		return lines;
 	}
 
-	public void setLine(int line) {
-		this.line = line;
+	public void setLine(int lines) {
+		this.lines = lines;
 	}
 
 	public int getColum() {
-		return colum;
+		return columns;
 	}
 
-	public void setColum(int colum) {
-		this.colum = colum;
+	public void setColum(int columns) {
+		this.columns = columns;
 	}
   /**
   // Mudar para uma classe jogo
@@ -68,20 +83,20 @@ public class Tabuleiro {
 	}
 
 	public boolean validLocation(int line, int colum) {
-		if (line < this.line && line >= 0 && colum < this.colum && colum >= 0) {
+		if (line < this.lines && line >= 0 && colum < this.columns && colum >= 0) {
 			return true;
 		}
 		return false;
 	}
 
-  public void openCell(int line, int column){
-    if(validLocation(line, column))
-      campoMinado[line][column].openCell();
+  public void openCell(int lines, int columns){
+    if(validLocation(lines, columns))
+      campoMinado[lines][columns].openCell();
   }
 
-  public void setFlag(int line, int column, boolean status){
-    if(validLocation(line, column))
-      campoMinado[line][column].setFlag(status);
+  public void setFlag(int lines, int columns, boolean status){
+    if(validLocation(lines, columns))
+      campoMinado[lines][columns].setFlag(status);
   }
 
 }
