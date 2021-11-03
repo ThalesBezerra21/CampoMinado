@@ -4,8 +4,8 @@ class CellSafe extends Cell {
 
   private Set<Cell> vizinhos;
 
-  public CellSafe(){
-    super();
+  public CellSafe(int coordX, int coordY){
+    super(coordX, coordY);
     vizinhos = new HashSet<>();
   }
 
@@ -22,9 +22,19 @@ class CellSafe extends Cell {
     }
   }
   
-  public void addVizinho(Cell cell){
-    if(vizinhos.size() < 9)
-      vizinhos.add(cell);
+  public void addVizinhos(Tabuleiro tab){
+    Cell cell;
+    for(int i = -1; i < 2; i++){
+      for(int j = -1; j < 2; j++){
+        if(!(i == 0 && j == 0)){
+          cell = tab.getCell(getX(), getY());
+          if(cell != null){
+            this.vizinhos.add(cell);
+            
+          } 
+        }
+      }
+    }
   }
 
   public int countBombsNearby(){

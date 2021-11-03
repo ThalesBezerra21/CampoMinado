@@ -1,7 +1,7 @@
 class Bomb extends Cell {
   
-  public Bomb() {
-    super();
+  public Bomb(int coordX, int coordY) {
+    super(coordX, coordY);
   }
 
   public void openCell(){

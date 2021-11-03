@@ -1,13 +1,25 @@
 class Cell{
 
+  private int coordX;
+  private int coordY;
   private boolean isOpen;
   private boolean hasFlag;
   private char cellChar;
   
-  public Cell(){
+  public Cell(int coordX, int coordY){
+    this.coordX = coordX;
+    this.coordY = coordY;
     this.isOpen = false;
     this.cellChar = '-';
     setFlag(false);
+  }
+
+  public int getX(){
+    return this.coordX;
+  }
+
+  public int getY(){
+    return this.coordY;
   }
 
   public void openCell(){}

@@ -14,24 +14,37 @@ public class Tabuleiro {
   }
 
   public void fillTabuleiro(){
+    int bombX = 0, bombY = 0;
+
+    //Put safe cells
+    for(int i = 0; i < this.lines; i++){
+		  for(int j = 0; j < this.columns; j++)
+		    { 
+          campoMinado[i][j] = new CellSafe(i, j); 
+		    }	      
+    }
 
     //Put bombs
     for(int k = 0; k < 10; k++){
-      Random rand = new Random();
-      int bombX = rand.nextInt(this.lines);
-      int bombY = rand.nextInt(this.columns);
-      campoMinado[bombX][bombY] = new Bomb(); 
+      do{
+        Random rand = new Random();
+        bombX = rand.nextInt(this.columns);
+        bombY = rand.nextInt(this.lines);
+      }while(!(campoMinado[bombX][bombY] instanceof Bomb));
+      campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
 
-    //Put no bombs
-	  for(int i = 0; i < this.lines; i++){
+    //Add neighbors
+    for(int i = 0; i < this.lines; i++){
 		  for(int j = 0; j < this.columns; j++)
 		    { 
-          if(campoMinado[i][j] == null){
-            campoMinado[i][j] = new CellSafe(); 
-          } 
+          if(!(campoMinado[i][j] instanceof Bomb)){
+            System.out.println("Bomba");
+            ((CellSafe) campoMinado[i][j]).addVizinhos(this);
+          }
 		    }	      
     }
+	  
   }
 
   public int getLine() {
@@ -49,28 +62,15 @@ public class Tabuleiro {
 	public void setColum(int columns) {
 		this.columns = columns;
 	}
-  /**
-  // Mudar para uma classe jogo
-	public void choseDificult(int dificult) {
-		switch (dificult) {
-		case 1:
-			System.out.println("Game mode set easy!");
-			criateCampoMinado(8, 8);
-			break;
-		case 2:
-			System.out.println("Game mode set medium!");
-			criateCampoMinado(16, 16);
-			break;
-		case 3:
-			System.out.println("Game mode set hard!");
-			criateCampoMinado(24, 24);
-			break;
-		case 4:
-		default:
-		}
-	}
-  **/
 
+  public Cell getCell(int coordX, int coordY){
+    if(validLocation(coordX, coordY)){
+      return this.campoMinado[coordX][coordY];
+    }else{
+      return null;
+    }
+  }
+  
 	public void printCampoMinado() {
 		for (int i = 0; i < campoMinado.length; i++) {
 			for (int j = 0; j < campoMinado[0].length; j++) {
