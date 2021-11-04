@@ -3,7 +3,7 @@ class Cell{
   private int coordX;
   private int coordY;
   private boolean isOpen;
-  private boolean hasFlag;
+  private static boolean hasFlag;
   private char cellChar;
   
   public Cell(int coordX, int coordY){
@@ -33,7 +33,7 @@ class Cell{
   }
 
   public void setFlag(boolean status){
-    this.hasFlag = status;
+    hasFlag = status;
     if(status){
       if(!getOpen()){
         setChar('P');
@@ -45,8 +45,8 @@ class Cell{
     }
   }
 
-  public boolean getFlag(){
-    return this.hasFlag;
+  public static boolean getFlag(){
+    return hasFlag;
   }
 
   public void setChar(char chr){

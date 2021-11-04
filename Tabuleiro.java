@@ -75,9 +75,9 @@ public class Tabuleiro {
 		for (int i = 0; i < campoMinado.length; i++) {
 			for (int j = 0; j < campoMinado[0].length; j++) {
 				campoMinado[i][j].printCell();
-        System.out.print(" ");
+        System.out.print("");
 			}
-      System.out.println("");
+      System.out.println();
 		}
 
 	}
