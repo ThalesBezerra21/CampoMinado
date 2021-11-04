@@ -32,7 +32,13 @@ public class Jogo {
 			case 1:
 				if (line < tab.getLine() && column < tab.getColum()) {
 					tab.openCell(line, column);
-					tab.printCampoMinado();
+					//if(status do set flag. == true) {
+					//	System.out.println("In this place there is a flag, and it cannot be opened");
+					//	tab.openCell(line, column);
+					//}else {
+					//tab.openCell(line, column);
+					//tab.printCampoMinado();
+					//}
 				} else {
 					System.out.println("Choose a valid place");
 				}
