@@ -47,8 +47,43 @@ public class Jogo {
 		  System.out.print("\033[H\033[2J");
 		  System.out.flush();
 
-		  tab.openCell(line, column);
-		  tab.printCampoMinado();
+      Scanner p = new Scanner(System.in);
+			System.out.println("Select your purpose: ");
+			System.out.println(" 1 - Open Cell ");
+			System.out.println(" 2 - Set Flag");
+			int purpose = l.nextInt();
+			
+			switch (purpose) {
+			case 1:
+				if (line < tab.getLine() && column < tab.getColum()) {
+					tab.openCell(line, column);
+					if(Cell.getFlag() == true) {
+						System.out.println("In this place there is a flag, and it cannot be opened");
+						tab.openCell(line, column);
+					}else {
+					tab.openCell(line, column);	
+					}
+
+			  }else {
+					System.out.println("Choose a valid place");
+				}
+        System.out.println();
+        tab.printCampoMinado();
+        System.out.println();
+        break;
+        
+			case 2:
+				if (line < tab.getLine() && column < tab.getColum()) {
+					tab.setFlag(line, column, true);
+          System.out.println();
+					tab.printCampoMinado();
+				} else {
+					System.out.println("Choose a valid place");
+				}
+        break;
+      }
+		 // tab.openCell(line, column);
+		 // tab.printCampoMinado();
 		  if(tab.getCell(line, column) instanceof Bomb){
 			  System.out.println("Você perdeu!");
 			  break;
