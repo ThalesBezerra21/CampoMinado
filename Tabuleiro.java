@@ -30,7 +30,7 @@ public class Tabuleiro {
         Random rand = new Random();
         bombX = rand.nextInt(this.columns);
         bombY = rand.nextInt(this.lines);
-      }while(!(campoMinado[bombX][bombY] instanceof Bomb));
+      }while(campoMinado[bombX][bombY] instanceof Bomb);
       campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
 
