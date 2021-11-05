@@ -35,7 +35,8 @@ public class Jogo {
 	}
 
 	public void choosePlace(Tabuleiro tab) {
-		while(true){
+		boolean running = true;
+		while(running){
 		  System.out.println("Choose a line: ");
 		  Scanner l = new Scanner(System.in);
 		  int line = l.nextInt() - 1;
@@ -56,38 +57,38 @@ public class Jogo {
 			switch (purpose) {
 			case 1:
 				if (line < tab.getLine() && column < tab.getColum()) {
-					tab.openCell(line, column);
-					if(Cell.getFlag() == true) {
+					if((tab.getCell(line, column)).getFlag() == true) {
 						System.out.println("In this place there is a flag, and it cannot be opened");
-						tab.openCell(line, column);
 					}else {
-					tab.openCell(line, column);	
+						tab.openCell(line, column);
+						if(tab.getCell(line, column) instanceof Bomb){
+							System.out.println("Você perdeu!");
+							tab.printCampoMinado();
+							running = false;
+							break;
+						}	
 					}
 
 			  }else {
 					System.out.println("Choose a valid place");
 				}
-        System.out.println();
-        tab.printCampoMinado();
-        System.out.println();
-        break;
-        
+        		System.out.println();
+        		tab.printCampoMinado();
+        		System.out.println();
+        		break;
 			case 2:
 				if (line < tab.getLine() && column < tab.getColum()) {
-					tab.setFlag(line, column, true);
-          System.out.println();
+					tab.setFlag(line, column);
+          			System.out.println();
 					tab.printCampoMinado();
 				} else {
 					System.out.println("Choose a valid place");
 				}
-        break;
+        	break;
       }
 		 // tab.openCell(line, column);
 		 // tab.printCampoMinado();
-		  if(tab.getCell(line, column) instanceof Bomb){
-			  System.out.println("Você perdeu!");
-			  break;
-		  }
+		  
 		}
 	}
 }

@@ -3,7 +3,7 @@ class Cell{
   private int coordX;
   private int coordY;
   private boolean isOpen;
-  private static boolean hasFlag;
+  private boolean hasFlag;
   private char cellChar;
   
   public Cell(int coordX, int coordY){
@@ -45,7 +45,7 @@ class Cell{
     }
   }
 
-  public static boolean getFlag(){
+  public boolean getFlag(){
     return hasFlag;
   }
 

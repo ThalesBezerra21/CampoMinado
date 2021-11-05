@@ -101,9 +101,15 @@ public class Tabuleiro {
       campoMinado[lines][columns].openCell();
   }
 
-  public void setFlag(int lines, int columns, boolean status){
-    if(validLocation(lines, columns))
-      campoMinado[lines][columns].setFlag(status);
+  public void setFlag(int lines, int columns){
+    if(validLocation(lines, columns)){
+      Cell cell = campoMinado[lines][columns];
+      if(cell.getFlag()){
+        cell.setFlag(false);
+      }else{
+        cell.setFlag(true);
+      }
+    }
   }
 
 }

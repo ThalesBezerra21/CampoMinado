@@ -14,19 +14,22 @@ class CellSafe extends Cell {
   }
 
   public void openCell(){
-    setOpen(true);
-    int bombsNearby = countBombsNearby();
-    if(bombsNearby == 0){
-      setChar(' ');
-      for(Cell cell: vizinhos){
-        //if(cell instanceof CellSafe){
-          //CellSafe cs = (CellSafe) cell;
-          //cs.openCell();
-       //}
+    if(!getOpen()){
+      setOpen(true);
+      int bombsNearby = countBombsNearby();
+      if(bombsNearby == 0){
+        setChar(' ');
+        for(Cell cell: vizinhos){
+          if(cell instanceof CellSafe){
+            CellSafe cs = (CellSafe) cell;
+            cs.openCell();
+         }
+        }
+      }else{
+        setChar(Character.forDigit(bombsNearby, 10));
       }
-    }else{
-      setChar(Character.forDigit(bombsNearby, 10));
     }
+    
   }
   
   public void addVizinhos(Tabuleiro tab){
