@@ -4,13 +4,12 @@ public class Tabuleiro {
 
 	private int lines;
 	private int columns;
-	private Cell[][] campoMinado;
+	public Cell[][] campoMinado;
 
 	public Tabuleiro(int lines, int columns) {
 	  this.lines = lines;
 	  this.columns = columns;
 	  campoMinado = new Cell[this.lines][this.columns];
-    fillTabuleiro();
   }
 
   public void fillTabuleiro(){
@@ -25,12 +24,12 @@ public class Tabuleiro {
     }
 
     //Put bombs
-    for(int k = 0; k < 10; k++){
+    for(int k = 0; k < (lines*columns)/4; k++){
       do{
         Random rand = new Random();
         bombX = rand.nextInt(this.columns);
         bombY = rand.nextInt(this.lines);
-      }while(campoMinado[bombX][bombY] instanceof Bomb);
+      }while((campoMinado[bombX][bombY] instanceof Bomb));
       campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
 
@@ -39,7 +38,6 @@ public class Tabuleiro {
 		  for(int j = 0; j < this.columns; j++)
 		    { 
           if(!(campoMinado[i][j] instanceof Bomb)){
-            System.out.println("Bomba");
             ((CellSafe) campoMinado[i][j]).addVizinhos(this);
           }
 		    }	      
@@ -75,7 +73,7 @@ public class Tabuleiro {
 		for (int i = 0; i < campoMinado.length; i++) {
 			for (int j = 0; j < campoMinado[0].length; j++) {
 				campoMinado[i][j].printCell();
-        System.out.print("");
+        System.out.print("  ");
 			}
       System.out.println();
 		}

@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Main {
   public static void main(String[] args) {
     /*
@@ -46,5 +48,28 @@ class Main {
     **/
 
     Jogo jogo = new Jogo();
+
+    /** 
+    System.out.println("rodando...");
+    Tabuleiro tab = new Tabuleiro(8,8);
+    tab.fillTabuleiro();
+    tab.printCampoMinado();
+
+    for(Cell[] line: tab.campoMinado){
+      for(Cell cell: line){
+        if(cell instanceof CellSafe){
+          CellSafe cellSafe = (CellSafe) cell;
+          System.out.println("vizinhos: ");
+          Set<Cell> vizinhos = cellSafe.getVizinhos();
+          for(Cell vizinho: vizinhos){
+            System.out.println("  ");
+            vizinho.printCell();
+            System.out.println("");
+          }
+        }
+      }
+    }
+    **/
+
   }
 }

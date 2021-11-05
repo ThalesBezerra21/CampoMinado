@@ -9,13 +9,20 @@ class CellSafe extends Cell {
     vizinhos = new HashSet<>();
   }
 
+  public Set<Cell> getVizinhos(){
+    return this.vizinhos;
+  }
+
   public void openCell(){
-    int bombsNearby = countBombsNearby();
     setOpen(true);
+    int bombsNearby = countBombsNearby();
     if(bombsNearby == 0){
       setChar(' ');
       for(Cell cell: vizinhos){
-        cell.openCell();
+        //if(cell instanceof CellSafe){
+          //CellSafe cs = (CellSafe) cell;
+          //cs.openCell();
+       //}
       }
     }else{
       setChar(Character.forDigit(bombsNearby, 10));
@@ -27,10 +34,9 @@ class CellSafe extends Cell {
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
         if(!(i == 0 && j == 0)){
-          cell = tab.getCell(getX(), getY());
+          cell = tab.getCell(getX() + i, getY() + j);
           if(cell != null){
             this.vizinhos.add(cell);
-            
           } 
         }
       }
