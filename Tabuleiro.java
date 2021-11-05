@@ -70,14 +70,23 @@ public class Tabuleiro {
   }
   
 	public void printCampoMinado() {
+    System.out.print("    ");
+    for(int i = 0; i < campoMinado.length; i++){
+      System.out.print(i+1);
+      System.out.print("  ");
+    }
+    System.out.println();
+    System.out.println();
+
 		for (int i = 0; i < campoMinado.length; i++) {
-			for (int j = 0; j < campoMinado[0].length; j++) {
+			System.out.print(i+1);
+      System.out.print("   ");
+      for (int j = 0; j < campoMinado[0].length; j++) {
 				campoMinado[i][j].printCell();
         System.out.print("  ");
 			}
       System.out.println();
 		}
-
 	}
 
 	public boolean validLocation(int line, int colum) {

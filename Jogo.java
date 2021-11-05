@@ -38,11 +38,11 @@ public class Jogo {
 		while(true){
 		  System.out.println("Choose a line: ");
 		  Scanner l = new Scanner(System.in);
-		  int line = l.nextInt();
+		  int line = l.nextInt() - 1;
 		
 		  System.out.println("Choose a column: ");
 		  Scanner c = new Scanner(System.in);
-		  int column = c.nextInt();
+		  int column = c.nextInt() - 1;
 
 		  System.out.print("\033[H\033[2J");
 		  System.out.flush();
