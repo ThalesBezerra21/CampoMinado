@@ -3,12 +3,14 @@ package rodarJogo;
 
 import java.util.Scanner;
 
-import campoMinado.celulas.Bomb;
+import campoMinado.celulas.*;
 import campoMinado.tabuleiro.Tabuleiro;
 
 public class Jogo {
 	
-  public Jogo() {	
+	
+
+ 	 public Jogo() {	
 		startGame();
 	}
 
@@ -36,7 +38,7 @@ public class Jogo {
 				return;
 		}	
 		tab.fillTabuleiro();
-		tab.printCampoMinado();
+		printCampoMinado(tab.getTabuleiro());
 		choosePlace(tab);		
 	}
 
@@ -68,8 +70,8 @@ public class Jogo {
 					}else {
 						tab.openCell(line, column);
 						if(tab.getCell(line, column) instanceof Bomb){
-							System.out.println("Você perdeu!");
-							tab.printCampoMinado();
+							System.out.println("Vocï¿½ perdeu!");
+							printCampoMinado(tab.getTabuleiro());
 							running = false;
 							break;
 						}	
@@ -79,14 +81,14 @@ public class Jogo {
 					System.out.println("Choose a valid place");
 				}
         		System.out.println();
-        		tab.printCampoMinado();
+        		printCampoMinado(tab.getTabuleiro());
         		System.out.println();
         		break;
 			case 2:
 				if (line < tab.getLine() && column < tab.getColum()) {
 					tab.setFlag(line, column);
           			System.out.println();
-					tab.printCampoMinado();
+					  printCampoMinado(tab.getTabuleiro());
 				} else {
 					System.out.println("Choose a valid place");
 				}
@@ -97,7 +99,29 @@ public class Jogo {
 		  
 		}
 	}
+
+	public void printCampoMinado(Cell[][] campoMinado) {
+		System.out.print("    ");
+		for(int i = 0; i < campoMinado.length; i++){
+		  System.out.print(i+1);
+		  System.out.print("  ");
+		}
+		System.out.println();
+		System.out.println();
+	
+			for (int i = 0; i < campoMinado.length; i++) {
+				System.out.print(i+1);
+		  System.out.print("   ");
+		  for (int j = 0; j < campoMinado[0].length; j++) {
+					campoMinado[i][j].printCell();
+			System.out.print("  ");
+				}
+		  System.out.println();
+			}
+		}
 }
+
+
 
 
 // Tabuleiro tab = new Tabuleiro(8, 8);
