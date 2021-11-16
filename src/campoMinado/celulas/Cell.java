@@ -5,6 +5,7 @@ public class Cell{
   private int coordX;
   private int coordY;
   private boolean isOpen;
+  private boolean isBomb;
   private boolean hasFlag;
   private char cellChar;
   
@@ -12,6 +13,7 @@ public class Cell{
     this.coordX = coordX;
     this.coordY = coordY;
     this.isOpen = false;
+    this.isBomb = false;
     this.cellChar = '-';
     setFlag(false);
   }
@@ -25,6 +27,14 @@ public class Cell{
   }
 
   public void openCell(){}
+
+  public boolean getBomb(){
+    return this.isBomb;
+  }
+
+  public void setBomb(boolean status){
+    this.isBomb = status;
+  }
 
   public boolean getOpen(){
     return this.isOpen;
@@ -58,9 +68,4 @@ public class Cell{
   public char getChar(){
     return this.cellChar;
   }
-
-  public void printCell(){
-    System.out.print(getChar());
-  }
-
 }

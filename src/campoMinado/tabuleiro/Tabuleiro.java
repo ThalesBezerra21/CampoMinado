@@ -4,8 +4,6 @@ import java.util.*;
 
 import campoMinado.celulas.*;
 
-
-
 public class Tabuleiro {
 
 	private int lines;
@@ -16,12 +14,13 @@ public class Tabuleiro {
 	  this.lines = lines;
 	  this.columns = columns;
 	  campoMinado = new Cell[this.lines][this.columns];
+    fillTabuleiro();
   }
 
-  public void fillTabuleiro(){
+  private void fillTabuleiro(){
     int bombX = 0, bombY = 0;
 
-    //Put safe cells
+    //Carregar celulas sem bomba
     for(int i = 0; i < this.lines; i++){
 		  for(int j = 0; j < this.columns; j++)
 		    { 
@@ -29,71 +28,84 @@ public class Tabuleiro {
 		    }	      
     }
 
-    //Put bombs
+    //Carregar bombas
     for(int k = 0; k < (lines*columns)/4; k++){
       do{
         Random rand = new Random();
         bombX = rand.nextInt(this.columns);
         bombY = rand.nextInt(this.lines);
-      }while((campoMinado[bombX][bombY] instanceof Bomb));
+      }while((this.getCell(bombX, bombY).getBomb()));
       campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
 
-    //Add neighbors
+    //Adicionar vizinhos
     for(int i = 0; i < this.lines; i++){
 		  for(int j = 0; j < this.columns; j++)
 		    { 
-          if(!(campoMinado[i][j] instanceof Bomb)){
-            ((CellSafe) campoMinado[i][j]).addVizinhos(this);
+          Cell cell = campoMinado[i][j];
+          if(!(cell.getBomb())){
+            this.addVizinhos((CellSafe) cell);
           }
 		    }	      
     }
 	  
   }
 
-  public Cell[][] getTabuleiro(){
-    return this.campoMinado;
+  //Adiciona os vizinhos da celula input. 
+  //Privado pois se deve usar apenas em fillTabuleiro
+  private void addVizinhos(CellSafe cell){
+    for(int i = -1; i < 2; i++){
+      for(int j = -1; j < 2; j++){
+        if(!(i == 0 && j == 0)){
+          Cell vizinho = this.getCell(cell.getX() + i, cell.getY() + j);
+          if(vizinho != null){
+            cell.addVizinho(vizinho);
+          } 
+        }
+      }
+    }
   }
 
-  public int getLine() {
-		return lines;
-	}
-
-	public void setLine(int lines) {
-		this.lines = lines;
-	}
-
-	public int getColum() {
-		return columns;
-	}
-
-	public void setColum(int columns) {
-		this.columns = columns;
-	}
-
   public Cell getCell(int coordX, int coordY){
-    if(validLocation(coordX, coordY)){
+    if(isValidLocation(coordX, coordY)){
       return this.campoMinado[coordX][coordY];
     }else{
       return null;
     }
   }
-  
-	public boolean validLocation(int line, int colum) {
-		if (line < this.lines && line >= 0 && colum < this.columns && colum >= 0) {
+
+  public Cell[][] getTabuleiro(){
+    return this.campoMinado;
+  }
+
+  public int getLines() {
+		return lines;
+	}
+
+	public int getColumns() {
+		return columns;
+	}
+
+	public boolean isValidLocation(int coordX, int coordY) {
+		if (coordX < this.lines && coordX >= 0 && coordY < this.columns && coordY >= 0) {
 			return true;
 		}
 		return false;
 	}
 
-  public void openCell(int lines, int columns){
-    if(validLocation(lines, columns))
-      campoMinado[lines][columns].openCell();
+  public void openCell(int coordX, int coordY){
+    if(isValidLocation(coordX, coordY))
+      campoMinado[coordX][coordY].openCell();
   }
 
-  public void setFlag(int lines, int columns){
-    if(validLocation(lines, columns)){
-      Cell cell = campoMinado[lines][columns];
+  public boolean getFlag(int coordX, int coordY){
+    return this.getCell(coordX, coordY).getFlag();
+  }
+
+  //Se tiver bandeira, coloca, se não tiver, tira
+  public void setFlag(int coordX, int coordY){
+    if(isValidLocation(coordX, coordY)){
+      Cell cell = this.getCell(coordX, coordY);
       if(cell.getFlag()){
         cell.setFlag(false);
       }else{

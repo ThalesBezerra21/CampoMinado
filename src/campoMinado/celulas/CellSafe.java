@@ -1,9 +1,6 @@
 package campoMinado.celulas;
 import java.util.*;
 
-import campoMinado.tabuleiro.Tabuleiro;
-
-
 public class CellSafe extends Cell {
 
   private Set<Cell> vizinhos;
@@ -24,11 +21,8 @@ public class CellSafe extends Cell {
       if(bombsNearby == 0){
         setChar(' ');
         for(Cell cell: vizinhos){
-          if(cell instanceof CellSafe){
-            CellSafe cs = (CellSafe) cell;
-            cs.openCell();
+            cell.openCell();
          }
-        }
       }else{
         setChar(Character.forDigit(bombsNearby, 10));
       }
@@ -36,24 +30,14 @@ public class CellSafe extends Cell {
     
   }
   
-  public void addVizinhos(Tabuleiro tab){
-    Cell cell;
-    for(int i = -1; i < 2; i++){
-      for(int j = -1; j < 2; j++){
-        if(!(i == 0 && j == 0)){
-          cell = tab.getCell(getX() + i, getY() + j);
-          if(cell != null){
-            this.vizinhos.add(cell);
-          } 
-        }
-      }
-    }
+  public void addVizinho(Cell cell){
+    this.vizinhos.add(cell);
   }
 
   public int countBombsNearby(){
     int count = 0;
     for(Cell cell: vizinhos){
-      if(cell instanceof Bomb) count ++;
+      if(cell.getBomb()) count ++;
     }
     return count;
   }

@@ -1,57 +1,61 @@
 package rodarJogo;
 
-
 import java.util.Scanner;
 
 import campoMinado.celulas.*;
 import campoMinado.tabuleiro.Tabuleiro;
 
 public class Jogo {
-	
-	
 
- 	 public Jogo() {	
+	private int dificuladade;
+	private Tabuleiro tab;
+
+ 	public Jogo() {	
 		startGame();
 	}
 
 	public void startGame(){
-	
-		Scanner d = new Scanner(System.in);
-		System.out.println("Choose the difficulty level:     |  1   |   2    |  3   |  ");
-		System.out.print("                                 | Easy | Medium | Hard |  ");
-		int dificult = d.nextInt();
-		Tabuleiro tab;
-		//d.close();
+		setDificuldade();
 		
-		if(dificult == 1) {
+		if(dificuladade == 1) {
 				System.out.println("Game mode set easy!");
-				tab = new Tabuleiro(8, 8);  
-		}else if(dificult == 2){	 
+				this.tab = new Tabuleiro(8, 8);  
+		}else if(dificuladade == 2){	 
 				System.out.println("Game mode set medium!");
-			  	tab = new Tabuleiro(16, 16);
-		}else if(dificult == 3) {		
+			  	this.tab = new Tabuleiro(16, 16);
+		}else if(dificuladade == 3) {		
 				System.out.println("Game mode set hard!");
-				tab = new Tabuleiro(24, 24);
+				this.tab = new Tabuleiro(24, 24);
 		}else{
 				System.out.println();
 				System.out.println("This level does not exist! Try again.");
 				return;
 		}	
-		tab.fillTabuleiro();
-		printCampoMinado(tab.getTabuleiro());
-		choosePlace(tab);		
+		printCampoMinado();
+		choosePlace();		
 	}
 
-	public void choosePlace(Tabuleiro tab) {
+	public void setDificuldade(){
+		Scanner d = new Scanner(System.in);
+		System.out.println("Choose the difficulty level:     |  1   |   2    |  3   |  ");
+		System.out.print("                                 | Easy | Medium | Hard |  ");
+		this.dificuladade = d.nextInt();
+		//d.close();
+	}
+
+
+	public void choosePlace() {
 		boolean running = true;
 		while(running){
-		  System.out.println("Choose a line: ");
 		  Scanner l = new Scanner(System.in);
-		  int line = l.nextInt() - 1;
+		  System.out.println("Choose a line: "); 
+		  int coordX = l.nextInt() - 1;
+		  //l.close();
 		
-		  System.out.println("Choose a column: ");
 		  Scanner c = new Scanner(System.in);
-		  int column = c.nextInt() - 1;
+		  System.out.println("Choose a column: ");
+		  int coordY = c.nextInt() - 1;
+		  //c.close();
 
 		  System.out.print("\033[H\033[2J");
 		  System.out.flush();
@@ -64,43 +68,40 @@ public class Jogo {
 			
 			switch (purpose) {
 			case 1:
-				if (line < tab.getLine() && column < tab.getColum()) {
-					if((tab.getCell(line, column)).getFlag() == true) {
+				if (tab.isValidLocation(coordX, coordY)) {
+					if((tab.getFlag(coordX, coordY))== true) {
 						System.out.println("In this place there is a flag, and it cannot be opened");
 					}else {
-						tab.openCell(line, column);
-						if(tab.getCell(line, column) instanceof Bomb){
+						tab.openCell(coordX, coordY);
+						if(tab.getCell(coordX, coordY) instanceof Bomb){
 							System.out.println("Voc� perdeu!");
-							printCampoMinado(tab.getTabuleiro());
+							printCampoMinado();
 							running = false;
 							break;
 						}	
 					}
-
 			  }else {
 					System.out.println("Choose a valid place");
 				}
         		System.out.println();
-        		printCampoMinado(tab.getTabuleiro());
+        		printCampoMinado();
         		System.out.println();
         		break;
 			case 2:
-				if (line < tab.getLine() && column < tab.getColum()) {
-					tab.setFlag(line, column);
+				if (tab.isValidLocation(coordX, coordY)) {
+					tab.setFlag(coordX, coordY);
           			System.out.println();
-					  printCampoMinado(tab.getTabuleiro());
+					printCampoMinado();
 				} else {
 					System.out.println("Choose a valid place");
 				}
         	break;
       }
-		 // tab.openCell(line, column);
-		 // tab.printCampoMinado();
-		  
 		}
 	}
 
-	public void printCampoMinado(Cell[][] campoMinado) {
+	public void printCampoMinado() {
+		Cell[][] campoMinado = tab.getTabuleiro();
 		System.out.print("    ");
 		for(int i = 0; i < campoMinado.length; i++){
 		  System.out.print(i+1);
@@ -109,30 +110,14 @@ public class Jogo {
 		System.out.println();
 		System.out.println();
 	
-			for (int i = 0; i < campoMinado.length; i++) {
-				System.out.print(i+1);
-		  System.out.print("   ");
-		  for (int j = 0; j < campoMinado[0].length; j++) {
-					campoMinado[i][j].printCell();
-			System.out.print("  ");
-				}
-		  System.out.println();
+		for (int i = 0; i < campoMinado.length; i++) {
+			System.out.print(i+1);
+			System.out.print("   ");
+			for (int j = 0; j < campoMinado[0].length; j++) {
+				System.out.print(campoMinado[i][j].getChar());
+				System.out.print("  ");
+			}
+			System.out.println();
 			}
 		}
 }
-
-
-
-
-// Tabuleiro tab = new Tabuleiro(8, 8);
-// tab.printCampoMinado();
-
-// System.out.println();
-
-// tab.setFlag(5, 5, true);
-// tab.printCampoMinado();
-
-// System.out.println();
-
-// tab.openCell(4, 3);
-// tab.printCampoMinado();
