@@ -1,42 +1,34 @@
 package campoMinado.celulas;
-import java.util.*;
 
 public class CellSafe extends Cell {
 
-  private Set<Cell> vizinhos;
-
   public CellSafe(int coordX, int coordY){
     super(coordX, coordY);
-    vizinhos = new HashSet<>();
-  }
-
-  public Set<Cell> getVizinhos(){
-    return this.vizinhos;
   }
 
   public void openCell(){
-    if(!getOpen()){
+    if(!this.getOpen()){
       setOpen(true);
       int bombsNearby = countBombsNearby();
       if(bombsNearby == 0){
         setChar(' ');
-        for(Cell cell: vizinhos){
-            cell.openCell();
-         }
+        for(Cell cell: this.getVizinhos()){
+          cell.openCell();
+        }
       }else{
-        setChar(Character.forDigit(bombsNearby, 10));
+        atualizarNumero();
       }
     }
-    
-  }
-  
-  public void addVizinho(Cell cell){
-    this.vizinhos.add(cell);
   }
 
+  public void atualizarNumero(){
+    int bombsNearby = countBombsNearby();
+    setChar(bombsNearby == 0? ' ': Character.forDigit(bombsNearby, 10));
+  }
+  
   public int countBombsNearby(){
     int count = 0;
-    for(Cell cell: vizinhos){
+    for(Cell cell: this.getVizinhos()){
       if(cell.getBomb()) count ++;
     }
     return count;

@@ -3,7 +3,7 @@ package rodarJogo;
 import java.util.Scanner;
 
 import campoMinado.celulas.*;
-import campoMinado.tabuleiro.Tabuleiro;
+import campoMinado.tabuleiro.*;
 
 public class Jogo {
 
@@ -18,8 +18,8 @@ public class Jogo {
 		setDificuldade();
 		
 		if(dificuladade == 1) {
-				System.out.println("Game mode set easy!");
-				this.tab = new Tabuleiro(8, 8);  
+				System.out.println("Game mode set testando5!");
+				this.tab = new TabuleiroMaluco(8, 8, 3);  
 		}else if(dificuladade == 2){	 
 				System.out.println("Game mode set medium!");
 			  	this.tab = new Tabuleiro(16, 16);

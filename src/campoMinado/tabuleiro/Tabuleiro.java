@@ -38,22 +38,26 @@ public class Tabuleiro {
       campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
 
+    addTodosVizinhos();
+	  
+  }
+
+  private void addTodosVizinhos(){
     //Adicionar vizinhos
     for(int i = 0; i < this.lines; i++){
 		  for(int j = 0; j < this.columns; j++)
 		    { 
           Cell cell = campoMinado[i][j];
-          if(!(cell.getBomb())){
-            this.addVizinhos((CellSafe) cell);
-          }
+          cell.resetVizinhos();
+          this.addVizinhos(cell);
+          if(cell.getOpen()) ((CellSafe)cell).atualizarNumero();
 		    }	      
     }
-	  
   }
 
   //Adiciona os vizinhos da celula input. 
   //Privado pois se deve usar apenas em fillTabuleiro
-  private void addVizinhos(CellSafe cell){
+  private void addVizinhos(Cell cell){
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
         if(!(i == 0 && j == 0)){
@@ -72,6 +76,11 @@ public class Tabuleiro {
     }else{
       return null;
     }
+  }
+
+  public void setCell(int coordX, int coordY, Cell cell){
+    this.campoMinado[coordX][coordY] = cell;
+    addTodosVizinhos();
   }
 
   public Cell[][] getTabuleiro(){

@@ -1,4 +1,5 @@
 package campoMinado.celulas;
+import java.util.*;
 
 public class Cell{
 
@@ -8,12 +9,14 @@ public class Cell{
   private boolean isBomb;
   private boolean hasFlag;
   private char cellChar;
+  private Set<Cell> vizinhos;
   
   public Cell(int coordX, int coordY){
     this.coordX = coordX;
     this.coordY = coordY;
     this.isOpen = false;
     this.isBomb = false;
+    vizinhos = new HashSet<>();
     this.cellChar = '-';
     setFlag(false);
   }
@@ -42,6 +45,18 @@ public class Cell{
 
   public void setOpen(boolean status){
     this.isOpen = status;
+  }
+
+  public void resetVizinhos(){
+    this.vizinhos = new HashSet<>();
+  }
+
+  public Set<Cell> getVizinhos(){
+    return this.vizinhos;
+  }
+
+  public void addVizinho(Cell cell){
+    this.vizinhos.add(cell);
   }
 
   public void setFlag(boolean status){
