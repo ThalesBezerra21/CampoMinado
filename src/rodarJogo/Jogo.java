@@ -8,6 +8,7 @@ import campoMinado.tabuleiro.*;
 public class Jogo {
 
 	private int dificuladade;
+	private int maluquice;
 	private Tabuleiro tab;
 
  	public Jogo() {	
@@ -15,32 +16,57 @@ public class Jogo {
 	}
 
 	public void startGame(){
+		setMaluco();
+
+		if(this.maluquice < 0 || this.maluquice > 3){
+			System.out.println("Jogo interrompido. Esse nivel de maluquice nao existe.");
+			return;
+		}
+
 		setDificuldade();
 		
+		int largura;
+
 		if(dificuladade == 1) {
-				System.out.println("Game mode set testando5!");
-				this.tab = new TabuleiroMaluco(8, 8, 3);  
+				System.out.println("Jogo iniciando... Nivel facil");
+				//this.tab = new TabuleiroMaluco(4, 4, 1);  
+				largura = 8;
 		}else if(dificuladade == 2){	 
-				System.out.println("Game mode set medium!");
-			  	this.tab = new Tabuleiro(16, 16);
+				System.out.println("Jogo iniciando... Nivel medio");
+			  	//this.tab = new Tabuleiro(16, 16);
+				largura = 12;
 		}else if(dificuladade == 3) {		
-				System.out.println("Game mode set hard!");
-				this.tab = new Tabuleiro(24, 24);
+				System.out.println("Jogo iniciando... Nivel dificil");
+				//this.tab = new Tabuleiro(24, 24);
+				largura = 16;
 		}else{
 				System.out.println();
-				System.out.println("This level does not exist! Try again.");
+				System.out.println("Jogo interrompido. Esse nivel de dificuladade nao existe.");
 				return;
 		}	
+
+		if(maluquice == 0){
+			this.tab = new Tabuleiro(largura, largura);
+		}else{
+			this.tab = new TabuleiroMaluco(largura, largura, this.maluquice);
+		}
+
 		printCampoMinado();
 		choosePlace();		
 	}
 
 	public void setDificuldade(){
 		Scanner d = new Scanner(System.in);
-		System.out.println("Choose the difficulty level:     |  1   |   2    |  3   |  ");
-		System.out.print("                                 | Easy | Medium | Hard |  ");
+		System.out.println("Escolha o nivel de dificuladade:     |   1   |   2   |    3    |");
+		System.out.println("                                     | Facil | Medio | Dificil |");
 		this.dificuladade = d.nextInt();
 		//d.close();
+	}
+
+	public void setMaluco(){
+		Scanner i = new Scanner(System.in);
+		System.out.println("Escolha o nivel de maluquice: | 0 | 1 | 2 | 3 |");
+		this.maluquice = i.nextInt();
 	}
 
 
@@ -48,12 +74,12 @@ public class Jogo {
 		boolean running = true;
 		while(running){
 		  Scanner l = new Scanner(System.in);
-		  System.out.println("Choose a line: "); 
+		  System.out.println("Escolha uma linha"); 
 		  int coordX = l.nextInt() - 1;
 		  //l.close();
 		
 		  Scanner c = new Scanner(System.in);
-		  System.out.println("Choose a column: ");
+		  System.out.println("Escolha uma coluna");
 		  int coordY = c.nextInt() - 1;
 		  //c.close();
 
@@ -61,27 +87,27 @@ public class Jogo {
 		  System.out.flush();
 
       Scanner p = new Scanner(System.in);
-			System.out.println("Select your purpose: ");
-			System.out.println(" 1 - Open Cell ");
-			System.out.println(" 2 - Set Flag");
+			System.out.println("Escolha uma acao");
+			System.out.println(" 1 - Abrir ");
+			System.out.println(" 2 - Colocar Bandeira");
 			int purpose = l.nextInt();
 			
 			switch (purpose) {
 			case 1:
 				if (tab.isValidLocation(coordX, coordY)) {
 					if((tab.getFlag(coordX, coordY))== true) {
-						System.out.println("In this place there is a flag, and it cannot be opened");
+						System.out.println("Voce nao pode abrir celulas com bandeiras!");
 					}else {
 						tab.openCell(coordX, coordY);
 						if(tab.getCell(coordX, coordY) instanceof Bomb){
-							System.out.println("Voc� perdeu!");
+							System.out.println("Voce perdeu!");
 							printCampoMinado();
 							running = false;
 							break;
 						}	
 					}
 			  }else {
-					System.out.println("Choose a valid place");
+					System.out.println("Escolha um lugar valido");
 				}
         		System.out.println();
         		printCampoMinado();
@@ -93,7 +119,7 @@ public class Jogo {
           			System.out.println();
 					printCampoMinado();
 				} else {
-					System.out.println("Choose a valid place");
+					System.out.println("Escolha um lugar valido");
 				}
         	break;
       }

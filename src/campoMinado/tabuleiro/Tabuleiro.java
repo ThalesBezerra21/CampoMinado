@@ -9,10 +9,14 @@ public class Tabuleiro {
 	private int lines;
 	private int columns;
 	public Cell[][] campoMinado;
+  public boolean vitoria;
+  public boolean perdeu;
 
 	public Tabuleiro(int lines, int columns) {
 	  this.lines = lines;
 	  this.columns = columns;
+    this.vitoria = false;
+    this.perdeu = false;
 	  campoMinado = new Cell[this.lines][this.columns];
     fillTabuleiro();
   }
@@ -49,7 +53,7 @@ public class Tabuleiro {
 		    { 
           Cell cell = campoMinado[i][j];
           cell.resetVizinhos();
-          this.addVizinhos(cell);
+          this.addVizinhosCelula(cell);
           if(cell.getOpen()) ((CellSafe)cell).atualizarNumero();
 		    }	      
     }
@@ -57,7 +61,7 @@ public class Tabuleiro {
 
   //Adiciona os vizinhos da celula input. 
   //Privado pois se deve usar apenas em fillTabuleiro
-  private void addVizinhos(Cell cell){
+  private void addVizinhosCelula(Cell cell){
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
         if(!(i == 0 && j == 0)){
@@ -71,7 +75,7 @@ public class Tabuleiro {
   }
 
   public Cell getCell(int coordX, int coordY){
-    if(isValidLocation(coordX, coordY)){
+    if(isValidLocation(coordX, coordY) && !this.vitoria){
       return this.campoMinado[coordX][coordY];
     }else{
       return null;
@@ -81,6 +85,14 @@ public class Tabuleiro {
   public void setCell(int coordX, int coordY, Cell cell){
     this.campoMinado[coordX][coordY] = cell;
     addTodosVizinhos();
+  }
+
+  public void openCell(int coordX, int coordY){
+    if(isValidLocation(coordX, coordY) && !this.vitoria){
+      campoMinado[coordX][coordY].openCell();
+      if(campoMinado[coordX][coordY].getBomb()) this.perdeu = true;
+    }
+    checkVitoria();
   }
 
   public Cell[][] getTabuleiro(){
@@ -95,6 +107,14 @@ public class Tabuleiro {
 		return columns;
 	}
 
+  public boolean getVitoria(){
+    return this.vitoria;
+  }
+
+  public boolean getPerdeu(){
+    return this.perdeu;
+  }
+
 	public boolean isValidLocation(int coordX, int coordY) {
 		if (coordX < this.lines && coordX >= 0 && coordY < this.columns && coordY >= 0) {
 			return true;
@@ -102,18 +122,13 @@ public class Tabuleiro {
 		return false;
 	}
 
-  public void openCell(int coordX, int coordY){
-    if(isValidLocation(coordX, coordY))
-      campoMinado[coordX][coordY].openCell();
-  }
-
   public boolean getFlag(int coordX, int coordY){
     return this.getCell(coordX, coordY).getFlag();
   }
 
   //Se tiver bandeira, coloca, se não tiver, tira
   public void setFlag(int coordX, int coordY){
-    if(isValidLocation(coordX, coordY)){
+    if(isValidLocation(coordX, coordY) && !this.vitoria){
       Cell cell = this.getCell(coordX, coordY);
       if(cell.getFlag()){
         cell.setFlag(false);
@@ -123,4 +138,15 @@ public class Tabuleiro {
     }
   }
 
+  public void checkVitoria(){
+    for(int i = 0; i < this.lines; i++){
+		  for(int j = 0; j < this.columns; j++)
+		    { 
+          if(!campoMinado[i][j].getOpen() && !campoMinado[i][j].getBomb()){
+            return;
+          }
+		    }	      
+    }
+    this.vitoria = true;
+  }
 }
