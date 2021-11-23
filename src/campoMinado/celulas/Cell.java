@@ -1,7 +1,7 @@
 package campoMinado.celulas;
 import java.util.*;
 
-public class Cell{
+public abstract class Cell{
 
   private int coordX;
   private int coordY;
@@ -29,7 +29,7 @@ public class Cell{
     return this.coordY;
   }
 
-  public void openCell(){}
+  public abstract void openCell();
 
   public boolean getBomb(){
     return this.isBomb;
