@@ -4,7 +4,7 @@ import java.util.*;
 
 import campoMinado.celulas.*;
 
-public class Tabuleiro {
+public class Tabuleiro implements campoMinado.Interface{
 
 	private int lines;
 	private int columns;
@@ -86,7 +86,8 @@ public class Tabuleiro {
     this.campoMinado[coordX][coordY] = cell;
     addTodosVizinhos();
   }
-
+  
+  @Override
   public void openCell(int coordX, int coordY){
     if(isValidLocation(coordX, coordY) && !this.vitoria){
       campoMinado[coordX][coordY].openCell();
@@ -127,6 +128,7 @@ public class Tabuleiro {
   }
 
   //Se tiver bandeira, coloca, se não tiver, tira
+  @Override
   public void setFlag(int coordX, int coordY){
     if(isValidLocation(coordX, coordY) && !this.vitoria){
       Cell cell = this.getCell(coordX, coordY);
