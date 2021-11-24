@@ -1,7 +1,7 @@
 package campoMinado.tabuleiro;
 
 import java.util.*;
-
+import campoMinado.exeption.InputInvalida;
 import campoMinado.celulas.*;
 
 public class Tabuleiro implements campoMinado.Interface{
@@ -64,8 +64,10 @@ public class Tabuleiro implements campoMinado.Interface{
   private void addVizinhosCelula(Cell cell){
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
-        if(!(i == 0 && j == 0)){
-          Cell vizinho = this.getCell(cell.getX() + i, cell.getY() + j);
+        int coordX = cell.getX() + i;
+        int coordY = cell.getY() + j;
+        if(!(i == 0 && j == 0) && isValidLocation(coordX, coordY)){
+          Cell vizinho = this.getCell(coordX, coordY);
           if(vizinho != null){
             cell.addVizinho(vizinho);
           } 
@@ -74,11 +76,13 @@ public class Tabuleiro implements campoMinado.Interface{
     }
   }
 
-  public Cell getCell(int coordX, int coordY){
+  public Cell getCell(int coordX, int coordY) throws InputInvalida{
     if(isValidLocation(coordX, coordY) && !this.vitoria){
       return this.campoMinado[coordX][coordY];
+    }else if(this.vitoria){
+      throw new InputInvalida("Voce ja venceu o jogo");
     }else{
-      return null;
+      throw new InputInvalida("As coordenadas são inválidas");
     }
   }
 
