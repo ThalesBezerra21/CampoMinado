@@ -1,11 +1,11 @@
-package rodarJogo;
+package campoMinado.rodarJogo;
 
 import java.util.Scanner;
 
 import campoMinado.celulas.*;
 import campoMinado.tabuleiro.*;
 
-public class Jogo {
+public class Jogo implements campoMinado.Interface{
 
 	private int dificuladade;
 	private int maluquice;
@@ -146,4 +146,14 @@ public class Jogo {
 			System.out.println();
 			}
 		}
+
+	@Override
+	public void setFlag(int coordX, int coordY) {
+		tab.setFlag(coordX, coordY);
+	}
+
+	@Override
+	public void openCell(int coordX, int coordY) {
+		tab.openCell(coordX, coordY);
+	}
 }

@@ -1,18 +1,9 @@
+package campoMinado;
 
 public interface Interface {
-	
-	public static final int larguraFacil = 8;
-	public static final int larguraMedio = 12;
-	public static final int larguraDificil = 16;
-	
-	public abstract void setDificuldade();
-	
-	public abstract void setMaluco();
-	
-	public abstract void choosePlace();
-	
-	public abstract void setFlag();
-	
-	public abstract void openCell();
+
+	public abstract void setFlag(int coordX, int coordY);
+
+	public abstract void openCell(int coordX, int coordY);
 	
 }
