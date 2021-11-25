@@ -1,7 +1,7 @@
 package campoMinado.tabuleiro;
 
 import java.util.*;
-import campoMinado.exeption.InputInvalida;
+import campoMinado.exeption.InputInvalidaExeption;
 import campoMinado.celulas.*;
 
 public class Tabuleiro implements campoMinado.Interface{
@@ -76,19 +76,25 @@ public class Tabuleiro implements campoMinado.Interface{
     }
   }
 
-  public Cell getCell(int coordX, int coordY) throws InputInvalida{
+  public Cell getCell(int coordX, int coordY) throws InputInvalidaExeption{
     if(isValidLocation(coordX, coordY) && !this.vitoria){
       return this.campoMinado[coordX][coordY];
     }else if(this.vitoria){
-      throw new InputInvalida("Voce ja venceu o jogo");
+      throw new InputInvalidaExeption("Voce ja venceu o jogo");
     }else{
-      throw new InputInvalida("As coordenadas são inválidas");
+      throw new InputInvalidaExeption("As coordenadas são invalidas");
     }
   }
 
-  public void setCell(int coordX, int coordY, Cell cell){
-    this.campoMinado[coordX][coordY] = cell;
-    addTodosVizinhos();
+  public void setCell(int coordX, int coordY, Cell cell) throws InputInvalidaExeption{
+    if(isValidLocation(coordX, coordY)){
+      this.campoMinado[coordX][coordY] = cell;
+      addTodosVizinhos();
+    }else{
+      throw new InputInvalidaExeption("As coordenadas são invalidas");
+    }
+    
+    
   }
   
   @Override
@@ -133,7 +139,7 @@ public class Tabuleiro implements campoMinado.Interface{
 
   //Se tiver bandeira, coloca, se não tiver, tira
   @Override
-  public void setFlag(int coordX, int coordY){
+  public void setFlag(int coordX, int coordY) throws InputInvalidaExeption{
     if(isValidLocation(coordX, coordY) && !this.vitoria){
       Cell cell = this.getCell(coordX, coordY);
       if(cell.getFlag()){
@@ -141,6 +147,8 @@ public class Tabuleiro implements campoMinado.Interface{
       }else{
         cell.setFlag(true);
       }
+    }else{
+      throw new InputInvalidaExeption("Coordenadas invalidas");
     }
   }
 
