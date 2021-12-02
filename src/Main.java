@@ -1,7 +1,7 @@
-import campoMinado.rodarJogo.Jogo;
+import campoMinado.rodarJogo.InterfaceGrafica;
 
 class Main {
   public static void main(String[] args) {
-    Jogo jogo = new Jogo();
+    InterfaceGrafica ig = new InterfaceGrafica();
   }
 }
