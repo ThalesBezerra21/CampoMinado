@@ -1,7 +1,6 @@
 package campoMinado.tabuleiro;
 
 import campoMinado.celulas.*;
-import campoMinado.exeption.InputInvalidaExeption;
 import java.util.*;
 
 public class TabuleiroMaluco extends Tabuleiro {
@@ -26,7 +25,7 @@ public class TabuleiroMaluco extends Tabuleiro {
         }
     }
 
-    public void setFlag(int coordX, int coordY) throws InputInvalidaExeption{
+    public void setFlag(int coordX, int coordY){
         Random rand = new Random();
         int bombX, bombY;
         if(isValidLocation(coordX, coordY) && !this.getVitoria()){
@@ -46,8 +45,6 @@ public class TabuleiroMaluco extends Tabuleiro {
             }
             this.getCell(coordX, coordY).setFlag(true);
           }
-        }else{
-          throw new InputInvalidaExeption("Coordenadas invalidas");
         }
       }
 }

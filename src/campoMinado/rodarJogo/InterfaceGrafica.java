@@ -2,21 +2,18 @@ package campoMinado.rodarJogo;
 
 import java.util.Scanner;
 
-import campoMinado.celulas.*;
-import campoMinado.tabuleiro.*;
+import campoMinado.celulas.Cell;
 
 public class InterfaceGrafica implements campoMinado.Interface{
 
 	private int dificuldade;
 	private int maluquice;
-	private int largura;
-	private Tabuleiro tab;
+	private Jogo jogo;
 
 	public InterfaceGrafica() {
 		setMaluco();
 		setDificuldade();
 		startGame();
-		Jogo jogo = new Jogo(this.dificuldade, this.maluquice);
 	}
 
 	public void startGame() {
@@ -24,26 +21,17 @@ public class InterfaceGrafica implements campoMinado.Interface{
 		if (dificuldade == 1) {
 			System.out.println("Jogo iniciando... Nivel facil");
 			// this.tab = new TabuleiroMaluco(4, 4, 1);
-			largura = 8;
 		} else if (dificuldade == 2) {
 			System.out.println("Jogo iniciando... Nivel medio");
 			// this.tab = new Tabuleiro(16, 16);
-			largura = 12;
 		} else if (dificuldade == 3) {
 			System.out.println("Jogo iniciando... Nivel dificil");
 			// this.tab = new Tabuleiro(24, 24);
-			largura = 16;
 		} else {
 			System.out.println();
-			System.out.println("Jogo interrompido. Esse nivel de dificuladade nao existe.");
 			return;
 		}
-
-		if (maluquice == 0) {
-			this.tab = new Tabuleiro(largura, largura);
-		} else {
-			this.tab = new TabuleiroMaluco(largura, largura, this.maluquice);
-		}
+		jogo = new Jogo(this.dificuldade, this.maluquice);
 		printCampoMinado();
 		choosePlace();
 	}
@@ -93,41 +81,29 @@ public class InterfaceGrafica implements campoMinado.Interface{
 				setFlag(coordX, coordY);
 				break;
 			}
+			if(jogo.getPerdeu()){
+				System.out.println("Voce perdeu");
+				running = false;
+			}
+
 		}
 	}
 	public void openCell(int coordX, int coordY){
-		if (tab.isValidLocation(coordX, coordY)) {
-			if ((tab.getFlag(coordX, coordY)) == true) {
-				System.out.println("Voce nao pode abrir celulas com bandeiras!");
-			} else {
-				tab.openCell(coordX, coordY);
-				if (tab.getCell(coordX, coordY) instanceof Bomb) {
-					System.out.println("Voce perdeu!");
-					printCampoMinado();
-				}
-			}
-		} else {
-			System.out.println("Escolha um lugar valido");
-		}
-		System.out.println();
+		jogo.openCell(coordX, coordY);
+		
 		printCampoMinado();
-		System.out.println();
+		
 	}
 
 	public void setFlag(int coordX,int coordY){
-		if (tab.isValidLocation(coordX, coordY)) {
-			tab.setFlag(coordX, coordY);
-			System.out.println();
-			printCampoMinado();
-		} else {
-			System.out.println("Escolha um lugar valido");
-			// }
-			// break;
-		}
+		jogo.setFlag(coordX, coordY);
+		
+		printCampoMinado();
+		
 	}
 
 	public void printCampoMinado() {
-		Cell[][] campoMinado = tab.getTabuleiro();
+		Cell[][] campoMinado = jogo.getTabuleiro().getTabuleiro();
 		System.out.print("    ");
 		for (int i = 0; i < campoMinado.length; i++) {
 			System.out.print(i + 1);
