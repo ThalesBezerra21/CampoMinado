@@ -1,4 +1,4 @@
-package campoMinado.exeption;
+package exeption;
 
 public class InputInvalidaExeption extends IllegalArgumentException{
     public InputInvalidaExeption(String mensagem){

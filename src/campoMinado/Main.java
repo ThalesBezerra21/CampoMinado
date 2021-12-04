@@ -1,4 +1,4 @@
-import campoMinado.rodarJogo.InterfaceGrafica;
+import rodarJogo.InterfaceGrafica;
 
 class Main {
   public static void main(String[] args) {

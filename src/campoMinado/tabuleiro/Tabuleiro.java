@@ -1,22 +1,19 @@
-package campoMinado.tabuleiro;
+package tabuleiro;
 
 import java.util.*;
-import campoMinado.exeption.InputInvalida;
-import campoMinado.celulas.*;
+import exeption.InputInvalidaExeption;
+import celulas.*;
+import rodarJogo.Interface;
 
-public class Tabuleiro implements campoMinado.Interface{
+public class Tabuleiro implements Interface{
 
 	private int lines;
 	private int columns;
 	public Cell[][] campoMinado;
-  public boolean vitoria;
-  public boolean perdeu;
 
 	public Tabuleiro(int lines, int columns) {
 	  this.lines = lines;
 	  this.columns = columns;
-    this.vitoria = false;
-    this.perdeu = false;
 	  campoMinado = new Cell[this.lines][this.columns];
     fillTabuleiro();
   }
@@ -76,13 +73,11 @@ public class Tabuleiro implements campoMinado.Interface{
     }
   }
 
-  public Cell getCell(int coordX, int coordY) throws InputInvalida{
-    if(isValidLocation(coordX, coordY) && !this.vitoria){
+  public Cell getCell(int coordX, int coordY) throws InputInvalidaExeption{
+    if(isValidLocation(coordX, coordY)){
       return this.campoMinado[coordX][coordY];
-    }else if(this.vitoria){
-      throw new InputInvalida("Voce ja venceu o jogo");
     }else{
-      throw new InputInvalida("As coordenadas são inválidas");
+      throw new InputInvalidaExeption("As coordenadas são inválidas");
     }
   }
 
@@ -92,12 +87,12 @@ public class Tabuleiro implements campoMinado.Interface{
   }
   
   @Override
-  public void openCell(int coordX, int coordY){
-    if(isValidLocation(coordX, coordY) && !this.vitoria){
+  public void openCell(int coordX, int coordY) throws InputInvalidaExeption{
+    if(isValidLocation(coordX, coordY) && !getCell(coordX, coordY).getOpen()){
       campoMinado[coordX][coordY].openCell();
-      if(campoMinado[coordX][coordY].getBomb()) this.perdeu = true;
+    }else{
+      throw new InputInvalidaExeption("Esta celula é inválida");
     }
-    checkVitoria();
   }
 
   public Cell[][] getTabuleiro(){
@@ -112,47 +107,43 @@ public class Tabuleiro implements campoMinado.Interface{
 		return columns;
 	}
 
-  public boolean getVitoria(){
-    return this.vitoria;
-  }
-
-  public boolean getPerdeu(){
-    return this.perdeu;
-  }
-
-	public boolean isValidLocation(int coordX, int coordY) {
-		if (coordX < this.lines && coordX >= 0 && coordY < this.columns && coordY >= 0) {
-			return true;
-		}
-		return false;
-	}
-
   public boolean getFlag(int coordX, int coordY){
     return this.getCell(coordX, coordY).getFlag();
   }
 
   //Se tiver bandeira, coloca, se não tiver, tira
   @Override
-  public void setFlag(int coordX, int coordY){
-    if(isValidLocation(coordX, coordY) && !this.vitoria){
-      Cell cell = this.getCell(coordX, coordY);
-      if(cell.getFlag()){
-        cell.setFlag(false);
-      }else{
-        cell.setFlag(true);
-      }
+  public void setFlag(int coordX, int coordY) throws InputInvalidaExeption{
+    Cell cell;
+    try{
+      cell = this.getCell(coordX, coordY);
+    }catch(InputInvalidaExeption e){
+      throw e;
     }
+    if(cell.getFlag()){
+      cell.setFlag(false);
+    }else{
+      cell.setFlag(true);
+    }
+    
   }
 
-  public void checkVitoria(){
+  public boolean checkVitoria(){
     for(int i = 0; i < this.lines; i++){
 		  for(int j = 0; j < this.columns; j++)
 		    { 
           if(!campoMinado[i][j].getOpen() && !campoMinado[i][j].getBomb()){
-            return;
+            return false;
           }
 		    }	      
     }
-    this.vitoria = true;
+    return true;
   }
+
+  public boolean isValidLocation(int coordX, int coordY) {
+		if (coordX < this.lines && coordX >= 0 && coordY < this.columns && coordY >= 0) {
+			return true;
+		}
+		return false;
+	}
 }

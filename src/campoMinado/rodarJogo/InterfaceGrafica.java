@@ -1,10 +1,9 @@
-package campoMinado.rodarJogo;
-
+package rodarJogo;
 import java.util.Scanner;
+import exeption.*;
+import celulas.Cell;
 
-import campoMinado.celulas.Cell;
-
-public class InterfaceGrafica implements campoMinado.Interface{
+public class InterfaceGrafica implements Interface{
 
 	private int dificuldade;
 	private int maluquice;
@@ -20,18 +19,17 @@ public class InterfaceGrafica implements campoMinado.Interface{
 
 		if (dificuldade == 1) {
 			System.out.println("Jogo iniciando... Nivel facil");
-			// this.tab = new TabuleiroMaluco(4, 4, 1);
 		} else if (dificuldade == 2) {
 			System.out.println("Jogo iniciando... Nivel medio");
-			// this.tab = new Tabuleiro(16, 16);
 		} else if (dificuldade == 3) {
 			System.out.println("Jogo iniciando... Nivel dificil");
-			// this.tab = new Tabuleiro(24, 24);
-		} else {
-			System.out.println();
+		} 
+		try{
+			jogo = new Jogo(this.dificuldade, this.maluquice);
+		}catch(InputInvalidaExeption e){
+			System.out.println("Erro: insira dados validos de dificulade e maluquice");
 			return;
 		}
-		jogo = new Jogo(this.dificuldade, this.maluquice);
 		printCampoMinado();
 		choosePlace();
 	}
@@ -84,22 +82,30 @@ public class InterfaceGrafica implements campoMinado.Interface{
 			if(jogo.getPerdeu()){
 				System.out.println("Voce perdeu");
 				running = false;
+			}else if(jogo.getVitoria()){
+				System.out.println("Parabens, voce venceu!");
+				running = false;
 			}
 
 		}
 	}
+	
 	public void openCell(int coordX, int coordY){
-		jogo.openCell(coordX, coordY);
-		
+		try{
+			jogo.openCell(coordX, coordY);
+		}catch(InputInvalidaExeption e){
+			System.out.println("Essa célula é inválida.");
+		}
 		printCampoMinado();
-		
 	}
 
 	public void setFlag(int coordX,int coordY){
-		jogo.setFlag(coordX, coordY);
-		
+		try{
+			jogo.setFlag(coordX, coordY);
+		}catch(InputInvalidaExeption e){
+			System.out.println("Essa célula é inválida.");
+		}
 		printCampoMinado();
-		
 	}
 
 	public void printCampoMinado() {

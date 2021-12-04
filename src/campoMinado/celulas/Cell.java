@@ -1,4 +1,4 @@
-package campoMinado.celulas;
+package celulas;
 import java.util.*;
 
 public abstract class Cell{

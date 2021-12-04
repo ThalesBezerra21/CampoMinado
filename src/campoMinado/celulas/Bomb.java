@@ -1,4 +1,4 @@
-package campoMinado.celulas;
+package celulas;
 
 public class Bomb extends Cell {
   

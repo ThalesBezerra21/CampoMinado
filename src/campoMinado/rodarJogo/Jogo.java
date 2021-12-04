@@ -1,9 +1,9 @@
-package campoMinado.rodarJogo;
+package rodarJogo;
+import exeption.InputInvalidaExeption;
+import tabuleiro.Tabuleiro;
+import tabuleiro.TabuleiroMaluco;
 
-import campoMinado.tabuleiro.Tabuleiro;
-import campoMinado.tabuleiro.TabuleiroMaluco;
-
-public class Jogo implements campoMinado.Interface{
+public class Jogo implements Interface{
 
 	private int dificuldade;
 	private int maluquice;
@@ -12,55 +12,53 @@ public class Jogo implements campoMinado.Interface{
 	private boolean perdeu;
 	private Tabuleiro tab;
 
-	public Jogo(int dificuldade,int maluquice){
-		
+	public Jogo(int dificuldade,int maluquice) throws InputInvalidaExeption{
 		vitoria = false;
 		perdeu = false;
-		setMaluco(this.maluquice);
-		setDificuldade(this.dificuldade);
+		this.maluquice = maluquice;
+		this.dificuldade = dificuldade;
 		if(dificuldade == 1){
 			this.largura = 8;			
 		}else if(dificuldade == 2){
 			this.largura = 12;
 		}else if(dificuldade == 3){
 			this.largura = 16;	
-		}else{}
-		
+		}else{
+			throw new InputInvalidaExeption("Essa dificuladade não existe");
+		}
 		
 		this.tab = new Tabuleiro(largura, largura);
-
 		if (maluquice != 0) {
-			this.tab = new TabuleiroMaluco(largura, largura, this.maluquice);
+			try{
+				this.tab = new TabuleiroMaluco(largura, largura, this.maluquice);
+			}catch(InputInvalidaExeption e){
+				throw e;
+			}
 		}
 	}
 
-	public void setDificuldade(int dificuldade){
-		this.dificuldade = dificuldade;
-	}
-
-	public void setMaluco(int maluquice){
-		this.maluquice = maluquice;
-	}
-
-	public void openCell(int coordX, int coordY){
+	public void openCell(int coordX, int coordY) throws InputInvalidaExeption{
 		if (tab.isValidLocation(coordX, coordY)) {
 			if ((tab.getFlag(coordX, coordY)) == true) {
-				//System.out.println("Voce nao pode abrir celulas com bandeiras!");
-			} else {
+				throw new InputInvalidaExeption("Você não pode abrir casas com bandeiras");
+			}else{
 				tab.openCell(coordX, coordY);
 				if (tab.getCell(coordX, coordY).getBomb()) {
-					perdeu = true;
-					//System.out.println("Voce perdeu!");					
+					perdeu = true;				
+				}else if (tab.checkVitoria()){
+					vitoria = true;
 				}
 			}
-		} else {
-			//System.out.println("Escolha um lugar valido");
+		}else{
+			throw new InputInvalidaExeption("Casa inválida para abrir");
 		}
 	}
 
-	public void setFlag(int coordX,int coordY){
+	public void setFlag(int coordX,int coordY) throws InputInvalidaExeption{
 		if (tab.isValidLocation(coordX, coordY)) {
 			tab.setFlag(coordX, coordY);	
+		}else{
+			throw new InputInvalidaExeption("Casa inválida para colocar bandeira");
 		}
 	}
 
