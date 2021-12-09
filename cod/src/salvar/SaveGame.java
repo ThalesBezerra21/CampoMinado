@@ -13,7 +13,6 @@ public class SaveGame {
 	public SaveGame(Jogo jogo) {
 
 		try {
-
 			OutputStream arq = new FileOutputStream("./cod/test.obj");
 			OutputStream buffer = new BufferedOutputStream(arq);
 			ObjectOutput output = new ObjectOutputStream(buffer);
@@ -26,7 +25,7 @@ public class SaveGame {
 
 	}
 	
-	public void CriaArquivo() {
+	public void CriaArquivo() throws InputInvalidaExeption{
 	try{
 		// Cria novo arquivo
 		if (!arq.exists()) {
@@ -35,12 +34,10 @@ public class SaveGame {
 		}
 	}catch(IOException io){
 			io.printStackTrace();
-			throw new InputInvalidaExeption("Esse arquivo n√£o existe");
+			throw new InputInvalidaExeption("Esse arquivo n„o existe");
 			}
 	}
 	
-	
-
 	public void deleteArquivo() {
 		arq.delete();
 	}

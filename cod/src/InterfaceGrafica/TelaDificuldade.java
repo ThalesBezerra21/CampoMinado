@@ -7,28 +7,30 @@ public class TelaDificuldade{
   private Botao voltar;
   private Botao iniciar;
   private PApplet app;
+  private TelaMestre telaMestre;
  
   private BotaoPressionavel dificuldades[];
   private BotaoPressionavel distorcoes[];
-  
-  public TelaDificuldade(PApplet app){
+
+  public TelaDificuldade(PApplet app, TelaMestre telaMestre){
 	this.app = app;
+	this.telaMestre = telaMestre;
     int largura = 200, altura = 50, pos_x = app.width/2, pos_y = app.height/3;
     
     dificuldades = new BotaoPressionavel[3];
-    dificuldades[0] = new BotaoPressionavel(app, pos_x - largura- 10, pos_y, largura, altura, "Fácil");
-    dificuldades[1] = new BotaoPressionavel(app, pos_x, pos_y, largura, altura, "Médio");
-    dificuldades[2] = new BotaoPressionavel(app, pos_x + largura + 10, pos_y, largura, altura, "Difícil");
-    
+    for(int i = 0; i < dificuldades.length; i++) {
+    	String label = i == 0? "Fácil": i == 1? "Médio": "Difícil";
+        dificuldades[i] = new BotaoPressionavel(app, pos_x - largura- 10 + i*(largura+10), pos_y, largura, altura, label);
+    }
     
     distorcoes = new BotaoPressionavel[4];
-    distorcoes[0] = new BotaoPressionavel(app, pos_x - 3*largura/2 -10, pos_y + 170, largura, altura, "Ausente");
-    distorcoes[1] = new BotaoPressionavel(app, pos_x - largura/2 - 5, pos_y + 170, largura, altura, "Leve");
-    distorcoes[2]  = new BotaoPressionavel(app, pos_x + largura/2 + 5, pos_y + 170, largura, altura, "Alta");
-    distorcoes[3] = new BotaoPressionavel(app, pos_x + 3*largura/2 + 10, pos_y + 170, largura, altura, "Muito Alta");
+    for(int i = 0; i < distorcoes.length; i++) {
+    	String label = i == 0? "Ausente": i == 1? "Leve": i == 2? "Alta": "Muito Alta";
+    	distorcoes[i] = new BotaoPressionavel(app, pos_x - 3*largura/2 -10 + i*(largura+10), pos_y + 200, largura, altura, label);
+    }
     
-    iniciar = new Botao(app, app.width/2-largura/2-5, app.height/3+80*4, 200, 50, "Iniciar");
-    voltar = new Botao(app, app.width/2+largura/2+5, app.height/3+80*4, 200, 50, "Voltar");
+    iniciar = new Botao(app, app.width/2-largura/2-5, app.height-largura, 200, 50, "Iniciar");
+    voltar = new Botao(app, app.width/2+largura/2+5, app.height-largura, 200, 50, "Voltar");
     
     ativarEscolhidoDesativarOutros(dificuldades, 0);
     ativarEscolhidoDesativarOutros(distorcoes, 0);
@@ -62,7 +64,7 @@ public class TelaDificuldade{
     voltar.draw();
   }
   
-  public String mouse(){
+  public void mouse(){
     for(int i = 0; i < dificuldades.length; i++){
       if(dificuldades[i].over()){
     	this.dificuldade = i;
@@ -76,11 +78,10 @@ public class TelaDificuldade{
       }
     }
     if(voltar.over()){
-    	return "Inicial";
+    	telaMestre.changeEstado("Inicial");
     }else if(iniciar.over()) {
-    	return "Jogo";
+    	telaMestre.changeEstado("Jogo");
     }
-    return "Dificuldade";
   }
   
   private void ativarEscolhidoDesativarOutros(BotaoPressionavel botoes[], int index){
