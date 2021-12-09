@@ -1,7 +1,5 @@
 package salvar;
 
-
-
 import java.io.*;
 
 import exeption.InputInvalidaExeption;
@@ -11,37 +9,55 @@ public class SaveGame {
 
 	private Jogo jogo;
 	private File arq;
-
+	
 	public SaveGame(Jogo jogo) {
-		arq = new File("./cod/test.obj");
 
 		try {
-			// Cria novo arquivo
-			if (!arq.exists()) {
-				// cria um arquivo (vazio)
-				arq.createNewFile();
-			}
-			// Deleta arquivo
-			// arq.delete();
 
-		} catch (IOException io) {
-			io.printStackTrace();
-			throw new InputInvalidaExeption("Esse arquivo não existe");
-		}
-		ObjectOutputStream obj;
-		try {
-			obj = new ObjectOutputStream(new FileOutputStream(arq, true));
-            obj.writeObject(jogo);
-            obj.close();
-		}catch (IOException e) {
+			OutputStream arq = new FileOutputStream("./cod/test.obj");
+			OutputStream buffer = new BufferedOutputStream(arq);
+			ObjectOutput output = new ObjectOutputStream(buffer);
+			output.writeObject(jogo);
+			// output.flush();
+			output.close();
+		} catch (IOException e) {
 			e.printStackTrace();
-		}    
-	}
+		}
 
-
-	public Jogo LoadGame() {
-		return jogo;
 	}
 	
+	public void CriaArquivo() {
+	try{
+		// Cria novo arquivo
+		if (!arq.exists()) {
+			// cria um arquivo (vazio)
+			arq.createNewFile();
+		}
+	}catch(IOException io){
+			io.printStackTrace();
+			throw new InputInvalidaExeption("Esse arquivo não existe");
+			}
+	}
+	
+	
+
+	public void deleteArquivo() {
+		arq.delete();
+	}
+
+	public Jogo LoadGame() {
+		try {
+			InputStream arq = new FileInputStream("./cod/test.obj");
+			InputStream buffer = new BufferedInputStream(arq);
+			ObjectInput input = new ObjectInputStream(buffer);
+			this.jogo = (Jogo) input;
+			input.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
+		return jogo;
+	}
 
 }
