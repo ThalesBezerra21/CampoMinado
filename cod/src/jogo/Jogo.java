@@ -45,9 +45,18 @@ public class Jogo implements Interface{
 	public int getColumns() {
 		return tab.getColumns();
 	}
+	
+	public int getDificuldade() {
+		return this.dificuldade;
+	}
+	
+	public int getMaluquice() 
+	{
+		return this.maluquice;
+	}
 
 	public void openCell(int coordX, int coordY) throws InputInvalidaExeption{
-		if (tab.isValidLocation(coordX, coordY)) {
+		if (tab.isValidLocation(coordX, coordY) && !(this.vitoria || this.perdeu)) {
 			if ((tab.getFlag(coordX, coordY)) == true) {
 				throw new InputInvalidaExeption("Você não pode abrir casas com bandeiras");
 			}else{
@@ -64,7 +73,7 @@ public class Jogo implements Interface{
 	}
 
 	public void setFlag(int coordX,int coordY) throws InputInvalidaExeption{
-		if (tab.isValidLocation(coordX, coordY)) {
+		if (tab.isValidLocation(coordX, coordY) && !(this.vitoria || this.perdeu)) {
 			tab.setFlag(coordX, coordY);	
 		}else{
 			throw new InputInvalidaExeption("Casa inválida para colocar bandeira");

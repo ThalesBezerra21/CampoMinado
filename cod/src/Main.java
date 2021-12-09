@@ -1,4 +1,5 @@
 import InterfaceGrafica.TelaDificuldade;
+import jogo.Jogo;
 import InterfaceGrafica.*;
 import processing.core.*;
 //import processing.sound.*;
@@ -9,6 +10,7 @@ public class Main extends PApplet {
 	private TelaInicial telaInicial;
 	private TelaDificuldade telaDificuldade;
 	private TelaJogo telaJogo;
+	private Jogo jogo;
 	
     public static void main(String[] args) {
     	PApplet.main(new String[] { "--present", Main.class.getName() });
@@ -30,11 +32,11 @@ public class Main extends PApplet {
     	estado = "Inicial";
     	telaInicial = new TelaInicial(this);
     	telaDificuldade = new TelaDificuldade(this);
-    	telaJogo = new TelaJogo(this, this.telaDificuldade);
+    	//telaJogo = new TelaJogo(this, this.telaDificuldade);
     }
     
     public void resetJogo() {
-    	telaJogo = new TelaJogo(this, this.telaDificuldade);
+    	jogo = new Jogo(telaDificuldade.getDificuldade(), telaDificuldade.getDistorcao());
     }
     
     void loadBackground(){
@@ -50,6 +52,8 @@ public class Main extends PApplet {
     	        break;
     	    case "Dificuldade":
     	        telaDificuldade.draw();
+    	        resetJogo();
+    	        telaJogo = new TelaJogo(this, jogo);
     	        break;
     	    case "Sair":
     	    	exit();
@@ -67,7 +71,6 @@ public class Main extends PApplet {
     	     break;
     	   case "Dificuldade":
     	     estado = telaDificuldade.mouse();
-    	     resetJogo();
     	     break;
     	   case "Jogo":
     		 estado = telaJogo.mouse();

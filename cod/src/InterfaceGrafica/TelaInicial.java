@@ -21,9 +21,9 @@ public class TelaInicial{
       coordY = app.height/2 + (altura+10)*i;
       textoBotao = i == 0? "Iniciar": i == 1? "Continuar": i == 2? "Ranking": "Sair";
       botoes[i] = new Botao(app, coordX, coordY, largura, altura, textoBotao);
-      if(botoes[i].getNome().equals("Continuar")){
-        botoes[i].setAtivado(false);
-      }
+      //if(botoes[i].getNome().equals("Continuar")){
+        //botoes[i].setAtivado(false);
+      //}
     }
   }
   

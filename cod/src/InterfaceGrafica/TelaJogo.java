@@ -4,19 +4,17 @@ import processing.core.*;
 
 public class TelaJogo {
 	private PApplet app;
-	private TelaDificuldade telaDificuldade; 
+	//private TelaDificuldade telaDificuldade; 
 	private Jogo jogo;
 	private BotaoCelula celulas[][];
 	private Botao desistir;
 	private int dificuldade;
 	private int distorcao;
 	
-	public TelaJogo(PApplet app, TelaDificuldade telaDificuldade) {
+	public TelaJogo(PApplet app, Jogo jogo) {
 		this.app = app;
-		this.telaDificuldade = telaDificuldade;
-		this.dificuldade = telaDificuldade.getDificuldade();
-		this.distorcao = telaDificuldade.getDistorcao();
-		this.jogo = new Jogo(dificuldade, distorcao);
+		this.dificuldade = jogo.getDificuldade();
+		this.distorcao = jogo.getMaluquice();
 		this.celulas = new BotaoCelula[jogo.getLines()][jogo.getColumns()];
 		for(int i = 0; i < jogo.getLines(); i++) {
 			for(int j = 0; j < jogo.getColumns(); j++) {
