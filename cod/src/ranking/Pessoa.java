@@ -2,11 +2,11 @@ package ranking;
 
 public class Pessoa{
 
-    private final int pontuacao;
+    private final int tempo;
     private final String nome;
 
-    public Pessoa(int pontuacao, String nome){
-        this.pontuacao = pontuacao;
+    public Pessoa(int tempo, String nome){
+        this.tempo = tempo;
         this.nome = nome;
     }
 
@@ -14,11 +14,9 @@ public class Pessoa{
         return nome;
     }
 
-    public int getPontuacao(){
-        return pontuacao;
+    public int getTempo(){
+        return tempo;
     }
-
-    
 
     public boolean equals(Object o){
         if(o instanceof Pessoa){
@@ -34,6 +32,6 @@ public class Pessoa{
     }
 
     public String toString(){
-        return  nome+" ( "+pontuacao+" ) ";
+        return  nome+" ( "+tempo+" ) ";
     }
     }
