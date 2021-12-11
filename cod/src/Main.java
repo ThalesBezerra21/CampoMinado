@@ -17,6 +17,7 @@ public class Main extends PApplet {
 
     public void setup(){
     	this.telaMestre = new TelaMestre(this);
+    	cursor(CROSS);
     }
     	  
     public void draw(){

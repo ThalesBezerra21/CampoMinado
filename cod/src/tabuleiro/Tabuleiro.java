@@ -38,11 +38,9 @@ public class Tabuleiro implements Interface{
       }while((this.getCell(bombX, bombY).getBomb()));
       campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
-
     addTodosVizinhos();
-	  
   }
-
+  
   private void addTodosVizinhos(){
     //Adicionar vizinhos
     for(int i = 0; i < this.lines; i++){

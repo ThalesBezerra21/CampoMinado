@@ -2,19 +2,12 @@ package InterfaceGrafica;
 import processing.core.*;
 
 public class BotaoPressionavel extends Botao{
-  private int coordX, coordY, largura, altura;
-  private String nome;
   private boolean pressionado;
   private PApplet app;
   
   public BotaoPressionavel(PApplet app, int x, int y, int l, int a, String n){
     super(app, x, y, l, a, n);
     this.app = app;
-    coordX = x;
-    coordY = y;
-    largura = l;
-    altura = a;
-    nome = n;
     pressionado = false;
   }
   
@@ -36,8 +29,8 @@ public class BotaoPressionavel extends Botao{
     	app.fill(app.color(165,165,141));
     	app.textSize(20);
     }
-    app.rect(coordX, coordY, largura, altura);
+    app.rect(this.getCoordX(), this.getCoordY(), this.getLargura(), this.getAltura());
     app.fill(app.color(255,255,255));
-    app.text(nome, coordX, coordY);
+    app.text(this.getNome(), this.getCoordX(), this.getCoordY());
   }
 }

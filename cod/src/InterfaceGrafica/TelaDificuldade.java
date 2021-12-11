@@ -1,6 +1,7 @@
 package InterfaceGrafica;
 import processing.core.*;
 
+
 public class TelaDificuldade{
   private int dificuldade;
   private int distorcao;
@@ -29,8 +30,8 @@ public class TelaDificuldade{
     	distorcoes[i] = new BotaoPressionavel(app, pos_x - 3*largura/2 -10 + i*(largura+10), pos_y + 200, largura, altura, label);
     }
     
-    iniciar = new Botao(app, app.width/2-largura/2-5, app.height-largura, 200, 50, "Iniciar");
-    voltar = new Botao(app, app.width/2+largura/2+5, app.height-largura, 200, 50, "Voltar");
+    iniciar = new Botao(app, app.width/2-largura/2-5, app.height-altura, 200, 50, "Iniciar");
+    voltar = new Botao(app, app.width/2+largura/2+5, app.height-altura, 200, 50, "Voltar");
     
     ativarEscolhidoDesativarOutros(dificuldades, 0);
     ativarEscolhidoDesativarOutros(distorcoes, 0);
@@ -47,9 +48,7 @@ public class TelaDificuldade{
   }
   
    public void draw(){
-	app.noStroke();
-	app.fill(app.color(107,112,92), 25);
-	app.rect(app.width/2, app.height/2, app.width, app.height);
+	telaMestre.drawCorDeFundo();
     app.fill(app.color(255,255,255));
     app.textSize(25);
     app.text("Dificuldade", app.width/2+10, app.height/3-60); 
@@ -80,6 +79,7 @@ public class TelaDificuldade{
     if(voltar.over()){
     	telaMestre.changeEstado("Inicial");
     }else if(iniciar.over()) {
+    	telaMestre.setJogo(dificuldade, distorcao);
     	telaMestre.changeEstado("Jogo");
     }
   }

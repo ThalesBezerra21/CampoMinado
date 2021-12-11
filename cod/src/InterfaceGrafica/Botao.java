@@ -17,6 +17,51 @@ public class Botao{
     ativado = true;
   }
   
+  public int getCoordX() {
+	  return coordX;
+  }
+
+  public void setCoordX(int coordX) {
+	  this.coordX = coordX;
+  }
+
+  public int getCoordY() {
+	  return coordY;
+  }
+
+  public void setCoordY(int coordY) {
+	this.coordY = coordY;
+  }
+
+
+  public int getLargura() {
+	  return largura;
+  }
+
+
+  public void setLargura(int largura) {
+	  this.largura = largura;
+  }
+
+
+  public int getAltura() {
+	  return altura;
+  }
+
+
+  public void setAltura(int altura) {
+	  this.altura = altura;
+  }
+
+
+  public PApplet getApp() {
+	  return app;
+  }
+
+  public void setApp(PApplet app) {
+	  this.app = app;
+  }
+  
   public String getNome(){
     return nome;
   }
@@ -58,4 +103,5 @@ public class Botao{
       return false;
     }
    }
+
 }
