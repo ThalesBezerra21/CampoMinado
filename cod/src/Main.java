@@ -7,11 +7,10 @@ public class Main extends PApplet {
 	private TelaMestre telaMestre;
 	
     public static void main(String[] args) {
-    	PApplet.main(new String[] { "--present", Main.class.getName() });
+    	PApplet.main(new String[] { "--present", Main.class.getName() });   
     }
 
     public void settings(){
-    	//size(1000, 600);
     	fullScreen();
     }
 
@@ -25,6 +24,6 @@ public class Main extends PApplet {
     }
 
     public void mouseClicked(){
-    	 telaMestre.mouseClicked();
+    	telaMestre.mouseClicked();
     }
 }

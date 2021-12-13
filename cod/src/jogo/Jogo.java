@@ -9,6 +9,7 @@ public class Jogo implements Interface{
 	private int dificuldade;
 	private int maluquice;
 	private int largura;
+	private int altura;
 	private boolean vitoria;
 	private boolean perdeu;
 	private Tabuleiro tab;
@@ -19,19 +20,22 @@ public class Jogo implements Interface{
 		this.maluquice = maluquice;
 		this.dificuldade = dificuldade;
 		if(dificuldade == 0){
-			this.largura = 8;			
+			this.largura = 8;
+			this.altura = 8;
 		}else if(dificuldade == 1){
 			this.largura = 10;
+			this.altura = 10;
 		}else if(dificuldade == 2){
-			this.largura = 12;	
+			this.largura = 12;
+			this.altura = 12;
 		}else{
 			throw new InputInvalidaExeption("Essa dificuladade não existe");
 		}
 		
-		this.tab = new Tabuleiro(largura, largura);
+		this.tab = new Tabuleiro(largura, altura);
 		if (maluquice != 0) {
 			try{
-				this.tab = new TabuleiroMaluco(largura, largura, this.maluquice);
+				this.tab = new TabuleiroMaluco(largura, altura, this.maluquice);
 			}catch(InputInvalidaExeption e){
 				throw e;
 			}
@@ -97,5 +101,18 @@ public class Jogo implements Interface{
 			}
 		}
 		return tabuleiro;
+	}
+	
+	public int getPontuacao() {
+		int pont = 0;
+		for(char[] linha: getTabuleiro()) {
+			for(char ch: linha) {
+				if(Character.isDigit(ch)) {
+					pont += (10+this.dificuldade)*Character.getNumericValue(ch);
+				}
+			}
+		}
+		return pont;
+		
 	}
 }

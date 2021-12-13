@@ -15,11 +15,12 @@ public class Tabuleiro implements Interface{
 	  this.lines = lines;
 	  this.columns = columns;
 	  campoMinado = new Cell[this.lines][this.columns];
-    fillTabuleiro();
+      fillTabuleiro();
   }
 
   private void fillTabuleiro(){
     int bombX = 0, bombY = 0;
+    int centroX = this.lines/2, centroY = this.columns/2;
 
     //Carregar celulas sem bomba
     for(int i = 0; i < this.lines; i++){
@@ -30,12 +31,14 @@ public class Tabuleiro implements Interface{
     }
 
     //Carregar bombas
-    for(int k = 0; k < (lines*columns)/4; k++){
+    for(int k = 0; k < (lines*columns)/5; k++){
       do{
         Random rand = new Random();
         bombX = rand.nextInt(this.columns);
         bombY = rand.nextInt(this.lines);
-      }while((this.getCell(bombX, bombY).getBomb()));
+      }while((this.getCell(bombX, bombY).getBomb()) ||
+    		  ((bombX >= centroX-1 && bombX <= centroX+1) &&
+    		  (bombY >= centroY-1 && bombY <= centroY+1)));
       campoMinado[bombX][bombY] = new Bomb(bombX, bombY);
     }
     addTodosVizinhos();

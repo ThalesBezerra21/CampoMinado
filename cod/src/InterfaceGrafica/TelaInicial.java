@@ -48,11 +48,13 @@ public class TelaInicial{
       for(Botao botao: botoes){
           if(botao.over() && botao.getAtivado()){
             if(botao.getNome().equals("Iniciar")){
-              telaMestre.changeEstado("Dificuldade");
+            	telaMestre.changeEstado("Dificuldade");
             }else if(botao.getNome().equals("Sair")) {
-              telaMestre.changeEstado("Sair");
+            	telaMestre.changeEstado("Sair");
             }else if(botao.getNome().equals("Continuar")) {
-              telaMestre.loadJogo();
+            	telaMestre.loadJogo();
+            }else if(botao.getNome().equals("Ranking")){
+            	telaMestre.changeEstado("Ranking");
             }
           }
       }

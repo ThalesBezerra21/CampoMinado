@@ -6,15 +6,17 @@ import processing.core.*;
 
 public class BotaoCelula extends Botao{
 	private PApplet app;
+	private TelaMestre telaMestre;
 	private Jogo jogo;
 	private int locXTab;
 	private int locYTab;
 	private PImage bandeiraImg;
 	private PImage bombaImg;
 	
-	public BotaoCelula(PApplet app, int coordX, int coordY, int largura, int locXTab, int locYTab, Jogo jogo, PImage bombaImg, PImage bandeiraImg){
+	public BotaoCelula(PApplet app, TelaMestre telaMestre, int coordX, int coordY, int largura, int locXTab, int locYTab, Jogo jogo, PImage bombaImg, PImage bandeiraImg){
 		super(app, coordX, coordY, largura, largura, "");
 		this.app = app;
+		this.telaMestre = telaMestre;
 		this.jogo = jogo;
 		this.locXTab = locXTab;
 		this.locYTab = locYTab;
@@ -78,8 +80,10 @@ public class BotaoCelula extends Botao{
 			try{
 				if(isBandeira) {
 					jogo.setFlag(this.locXTab, this.locYTab);
+					telaMestre.playEffect("data/tuc.mp3");
 				}else {
 					jogo.openCell(this.locXTab, this.locYTab);
+					telaMestre.playEffect("data/shot2.mp3");
 				}
 			}catch(InputInvalidaExeption e) {
 				System.out.println("Célula inválida");

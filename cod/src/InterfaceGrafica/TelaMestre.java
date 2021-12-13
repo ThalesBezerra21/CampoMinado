@@ -2,7 +2,7 @@ package InterfaceGrafica;
 import jogo.Jogo;
 import processing.core.*;
 import salvar.SaveGame;
-//import processing.sound.*;
+import ddf.minim.*;
 
 public class TelaMestre {
 
@@ -12,9 +12,12 @@ public class TelaMestre {
 	private TelaDificuldade telaDificuldade;
 	private TelaVitoria telaVitoria;
 	private TelaDerrota telaDerrota;
+	private TelaRanking telaRanking;
 	private TelaJogo telaJogo;
 	private Jogo jogo;
 	private String estado; //Determina qual tela deve ser desenhada
+	private Minim minim;
+	private AudioPlayer player;
 	
     public TelaMestre(PApplet app) {
     	this.app = app;
@@ -22,8 +25,12 @@ public class TelaMestre {
     	this.telaDificuldade = new TelaDificuldade(app, this);
     	this.telaVitoria = new TelaVitoria(app, this);
     	this.telaDerrota = new TelaDerrota(app, this);
+    	this.telaRanking = new TelaRanking(app, this);
     	this.background = app.loadImage("codgod.jpg");
     	this.estado = "Inicial";
+    	minim = new Minim(app);
+    	playMusic("data/playing.mp3");
+    	//playMusic("data/mobile.mp3");
     	loadAlignement();
     	loadBackground();
     	loadFont();
@@ -74,6 +81,10 @@ public class TelaMestre {
     	this.estado = estado;
     }
     
+    public String getEstado() {
+    	return this.estado;
+    }
+    
     public void draw(){
     	 switch(this.estado){
     	    case "Inicial":
@@ -94,6 +105,9 @@ public class TelaMestre {
     	    case "Derrota":
     	    	telaDerrota.draw();
     	    	break;
+    	    case "Ranking":
+    	    	telaRanking.draw();
+    	    	break;
     	 }
     }
 
@@ -110,9 +124,24 @@ public class TelaMestre {
     		 break;
     	   case "Vitoria":
     		 telaVitoria.mouse();
+    		 break;
     	   case "Derrota":
     		 telaDerrota.mouse();
+    		 break;
+    	   case "Ranking":
+    		 telaRanking.mouse();
+    		 break;
     	 }
     	 loadBackground();
+    }
+    
+    public void playMusic(String path) {
+    	player = minim.loadFile(path);
+    	player.loop(); 
+    }
+    
+    public void playEffect(String path) {
+    	player = minim.loadFile(path);
+    	player.play();
     }
 }
