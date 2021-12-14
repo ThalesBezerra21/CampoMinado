@@ -1,6 +1,8 @@
 package jogo;
 
 import interfaces.Interface;
+import ranking.Pessoa;
+
 import java.io.*;
 
 import exeption.InputInvalidaExeption;
@@ -17,6 +19,7 @@ public class Jogo implements Interface, Serializable{
 	private boolean perdeu;
 	private Tabuleiro tab;
 	private File arq;
+	private Pessoa p;
 
 	public Jogo(int dificuldade, int maluquice) throws InputInvalidaExeption {
 		vitoria = false;

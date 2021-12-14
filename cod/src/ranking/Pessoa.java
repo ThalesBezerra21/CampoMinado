@@ -27,10 +27,6 @@ public class Pessoa{
         return false;
     }
 
-    public int hashCode(){
-        return nome.hashCode();
-    }
-
     public String toString(){
         return  nome+" ( "+pontuacao+" ) ";
     }
