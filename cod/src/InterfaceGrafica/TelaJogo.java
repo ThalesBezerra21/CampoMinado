@@ -2,6 +2,7 @@ package InterfaceGrafica;
 import jogo.Jogo;
 import processing.core.*;
 import salvar.SaveGame;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -107,7 +108,7 @@ public class TelaJogo {
 				desativarBandeira();
 			
 			}else if(salvar.over()) {
-				SaveGame game = new SaveGame(jogo);
+				SaveGame sg = new SaveGame(jogo);
 				telaMestre.changeEstado("Inicial");
 				desativarBandeira();
 			

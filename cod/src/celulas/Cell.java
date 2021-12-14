@@ -1,7 +1,8 @@
 package celulas;
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Cell{
+public abstract class Cell implements Serializable{
 
   private int coordX;
   private int coordY;

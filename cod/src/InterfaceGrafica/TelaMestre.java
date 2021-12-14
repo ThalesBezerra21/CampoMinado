@@ -1,6 +1,7 @@
 package InterfaceGrafica;
 import jogo.Jogo;
 import processing.core.*;
+import salvar.LoadJogo;
 import salvar.SaveGame;
 import ddf.minim.*;
 
@@ -71,7 +72,7 @@ public class TelaMestre {
     }
     
     public void loadJogo() {
-    	jogo = new SaveGame(jogo).LoadGame();
+    	LoadJogo.LoadJogo();
     	telaJogo = new TelaJogo(app, this);
     	estado = "Jogo";
     }

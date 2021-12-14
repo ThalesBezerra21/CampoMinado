@@ -1,21 +1,26 @@
 package tabuleiro;
 
+import java.io.*;
 import java.util.*;
 import exeption.InputInvalidaExeption;
 import celulas.*;
 import interfaces.Interface;
 
-public class Tabuleiro implements Interface{
+
+public class Tabuleiro implements Interface, Serializable{
 
 	private int lines;
 	private int columns;
+	private String nome;
 	public Cell[][] campoMinado;
+	
 
 	public Tabuleiro(int lines, int columns) {
 	  this.lines = lines;
 	  this.columns = columns;
 	  campoMinado = new Cell[this.lines][this.columns];
       fillTabuleiro();
+     
   }
 
   private void fillTabuleiro(){
@@ -147,4 +152,5 @@ public class Tabuleiro implements Interface{
 		}
 		return false;
 	}
+  
 }
