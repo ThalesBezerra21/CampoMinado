@@ -1,11 +1,12 @@
 package jogo;
 
-import interfaces.Interface;
-import ranking.Pessoa;
-
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 
 import exeption.InputInvalidaExeption;
+import interfaces.Interface;
+import ranking.Pessoa;
 import tabuleiro.Tabuleiro;
 import tabuleiro.TabuleiroMaluco;
 
@@ -19,15 +20,14 @@ public class Jogo implements Interface, Serializable{
 	private boolean perdeu;
 	private Tabuleiro tab;
 	private File arq;
-	private Pessoa p;
 
 	public Jogo(int dificuldade, int maluquice) throws InputInvalidaExeption {
 		vitoria = false;
 		perdeu = false;
-
+		
 		try {
 			// Cria novo arquivo
-			arq = new File("./Teste.obj");
+			arq = new File("./teste.obj");
 
 			if (!arq.exists()) {
 				// cria um arquivo (vazio)

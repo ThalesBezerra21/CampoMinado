@@ -1,9 +1,13 @@
 package InterfaceGrafica;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import jogo.Jogo;
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PFont;
+import processing.core.PImage;
+import ranking.Pessoa;
+import ranking.Ranking;
 import salvar.LoadJogo;
-import salvar.SaveJogo;
-import ddf.minim.*;
 
 public class TelaMestre {
 
@@ -24,7 +28,7 @@ public class TelaMestre {
     	this.app = app;
     	this.telaInicial = new TelaInicial(app, this);
     	this.telaDificuldade = new TelaDificuldade(app, this);
-    	this.telaVitoria = new TelaVitoria(app, this);
+    	//this.telaVitoria = new TelaVitoria(app, this);
     	this.telaDerrota = new TelaDerrota(app, this);
     	this.telaRanking = new TelaRanking(app, this);
     	this.background = app.loadImage("codgod.jpg");
@@ -58,9 +62,9 @@ public class TelaMestre {
     	app.textFont(blackOps);
     }
     	 
-   // public void resetJogo() {
-    	//jogo = new Jogo(telaDificuldade.getDificuldade(), telaDificuldade.getDistorcao());
-    //}
+   public void resetJogo() {
+    	jogo = new Jogo(telaDificuldade.getDificuldade(), telaDificuldade.getDistorcao());
+    }
     
     public Jogo getJogo() {
     	return this.jogo;
@@ -72,9 +76,16 @@ public class TelaMestre {
     }
     
     public void loadJogo() {
-    	this.jogo = LoadJogo.LoadJogo();
-    	telaJogo = new TelaJogo(app, this);
-    	estado = "Jogo";
+    	try {
+    		Jogo jogoCarregado = LoadJogo.LoadJogo();
+    		if(!(jogoCarregado.getVitoria() || jogoCarregado.getPerdeu())){
+    			this.jogo = jogoCarregado;
+        		telaJogo = new TelaJogo(app, this);
+        		estado = "Jogo";
+    		}
+    	}catch(Exception e) {
+    		System.out.println("Nao exite jogo salvo.");
+    	}
     }
     
     public void changeEstado(String estado) {
@@ -84,6 +95,21 @@ public class TelaMestre {
     
     public String getEstado() {
     	return this.estado;
+    }
+    
+    public void deleteSavedJogo(){
+    	resetJogo();
+        this.jogo.deleteArquivo();
+    	System.out.println("Nao exite jogo salvo.");
+    }
+    
+    public void salvarPontuacao(String nome, int pontuacao) {
+    	Pessoa p = new Pessoa(pontuacao, nome);
+    }
+    
+    public void criarVitoria(int pontuacao) {
+    	telaVitoria = new TelaVitoria(app, this, pontuacao);
+    	this.changeEstado("Vitoria");
     }
     
     public void draw(){

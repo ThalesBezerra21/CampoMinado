@@ -18,12 +18,13 @@ public class LoadJogo {
 	
 	public static Jogo LoadJogo() {
 
+        InputStream file;
        try {
-    	   SalvarEstado state = new SalvarEstado(jogo);
-    	   InputStream file = new FileInputStream("./Teste.obj");
+    	   SalveEstado state = new SalveEstado(jogo);
+           file = new FileInputStream("./teste.obj");
            InputStream buffer = new BufferedInputStream(file);
            ObjectInput input = new ObjectInputStream (buffer);
-           state = (SalvarEstado)input.readObject();
+           state = (SalveEstado)input.readObject();
            jogo = state.getJogo();
            input.close();
        } catch (FileNotFoundException e) {

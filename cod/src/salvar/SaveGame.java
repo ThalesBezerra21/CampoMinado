@@ -15,7 +15,7 @@ public class SaveGame {
 		this.arq = jogo.getArq();
 		try {
 			SalveEstado state = new SalveEstado(jogo);
-			OutputStream arq = new FileOutputStream("./Teste.obj");
+			OutputStream arq = new FileOutputStream("./teste.obj");
 			OutputStream buffer = new BufferedOutputStream(arq);
 			ObjectOutput output = new ObjectOutputStream(buffer);
 			output.writeObject(state);

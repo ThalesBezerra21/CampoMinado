@@ -1,7 +1,7 @@
 package InterfaceGrafica;
 import jogo.Jogo;
 import processing.core.*;
-import salvar.SaveJogo;
+import salvar.SaveGame;
 
 import java.util.concurrent.TimeUnit;
 
@@ -89,10 +89,14 @@ public class TelaJogo {
 			}else if(gameOver == 2) {
 				if(app.millis() - timerGameOver >= 2000) {
 					if(jogo.getVitoria()) {
-						telaMestre.changeEstado("Vitoria");
+						//telaMestre.changeEstado("Vitoria");
+						telaMestre.criarVitoria(this.pontuacao);
+						telaMestre.deleteSavedJogo();
 					}else {
 						telaMestre.changeEstado("Derrota");
+						telaMestre.deleteSavedJogo();
 					}
+					
 				}
 			}
 		}
@@ -104,11 +108,12 @@ public class TelaJogo {
 	public void mouse() {
 		if(this.gameOver == 0) {
 			if(desistir.over()) {
-				telaMestre.changeEstado("Inicial");
+				telaMestre.changeEstado("Derrota");
+				telaMestre.deleteSavedJogo();
 				desativarBandeira();
 			
 			}else if(salvar.over()) {
-				SaveJogo sg = new SaveJogo(jogo);
+				SaveGame sg = new SaveGame(jogo);
 				telaMestre.changeEstado("Inicial");
 				desativarBandeira();
 			

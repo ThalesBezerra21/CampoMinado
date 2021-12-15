@@ -7,10 +7,11 @@ public class TelaVitoria {
 	private TelaMestre telaMestre;
 	private Botao voltar;
 	
-	public TelaVitoria(PApplet app, TelaMestre telaMestre) {
+	public TelaVitoria(PApplet app, TelaMestre telaMestre, int pontuacao) {
 		this.app = app;
 		this.telaMestre = telaMestre;
 		this.voltar = new Botao(app, app.width/2, app.height-70, 200, 50, "Voltar");
+		telaMestre.salvarPontuacao("Thales", pontuacao);
 	}
 	
 	public void draw() {
