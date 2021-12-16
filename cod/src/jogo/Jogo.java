@@ -26,13 +26,10 @@ public class Jogo implements Interface, Serializable{
 		perdeu = false;
 		
 		try {
-			// Cria novo arquivo
-			arq = new File("./teste.obj");
+			arq = new File("./jogoSalvo.obj");
 
 			if (!arq.exists()) {
-				// cria um arquivo (vazio)
 				arq.createNewFile();
-
 			}
 		} catch (IOException io) {
 			io.printStackTrace();

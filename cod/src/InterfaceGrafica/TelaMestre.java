@@ -105,6 +105,7 @@ public class TelaMestre {
     
     public void salvarPontuacao(String nome, int pontuacao) {
     	Pessoa p = new Pessoa(pontuacao, nome);
+    	Ranking rank = new Ranking(p);
     }
     
     public void criarVitoria(int pontuacao) {

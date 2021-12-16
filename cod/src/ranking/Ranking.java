@@ -3,35 +3,34 @@ package ranking;
 import java.io.*;
 import java.util.*;
 
+import exeption.InputInvalidaExeption;
+
 public class Ranking{
-	
-    private static final int RANK_MAX = 10;  
-    private List ranking;
-    private Pessoa p;
-    private File arq = new File("/Ranking.txt");;
+	 
+    private File aqrTXT;
+    
+    public Ranking(Pessoa p) {
+    	try {
+			aqrTXT = new File("./Ranking.txt");
 
-	public void rankear(Pessoa p){
-    		//Lista de pessoas
-    		List<Pessoa> ranking = new ArrayList<Pessoa>();
-    		
-            // Adicionar pessoa
-            ranking.add(p);
-
-            if(ranking.size() > RANK_MAX);
-            ranking.remove(((TreeSet<Pessoa>) ranking).last());;
-           
-        }   
-
-        public void add(Pessoa p){
-            List<String> ranking = new ArrayList<String>();
-
-        }
+			if (!aqrTXT.exists()) {
+				aqrTXT.createNewFile();	
+				aqrTXT = new File("./Ranking.txt");
+			}			
+		} catch (IOException io) {
+			io.printStackTrace();
+			throw new InputInvalidaExeption("Esse arquivo não existe");
+		}
+    	criarRanking(p);
+    	
+    	
+    }
         
-        public void criarRanking() {
+    public void criarRanking(Pessoa p) {
 
             try {
-                arq.createNewFile();
-                FileWriter fileWriter = new FileWriter(arq, false);
+                
+                BufferedWriter fileWriter = new BufferedWriter( new FileWriter(aqrTXT, true));
                 PrintWriter pW = new PrintWriter(fileWriter);
                 pW.print(p.getNome()+" ("+p.getPontuacao()+") ");
                 pW.flush();
@@ -40,11 +39,11 @@ public class Ranking{
             	e.printStackTrace();
             }
         }
-        private void lerRanking() {
+        private File lerRanking() {
 
             try {
             	
-                FileReader fileReader = new FileReader(arq);
+                FileReader fileReader = new FileReader(aqrTXT);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                
                 String linha = "";                
@@ -56,11 +55,9 @@ public class Ranking{
         	} catch (IOException e) {
             	e.printStackTrace();
             }
+			return aqrTXT;
         }
         
-        public List getRanking(){
-           return ranking;
-        }
  }
 
 

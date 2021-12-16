@@ -7,7 +7,6 @@ import jogo.Jogo;
 
 public class SaveJogo {
 
-	private static Jogo jogo;
 	private File arq;
 
 	public SaveJogo(Jogo jogo) {
@@ -15,7 +14,7 @@ public class SaveJogo {
 		this.arq = jogo.getArq();
 		try {
 			SalvarEstado state = new SalvarEstado(jogo);
-			OutputStream arq = new FileOutputStream("./Teste.obj");
+			OutputStream arq = new FileOutputStream("./jogoSalvo.obj");
 			OutputStream buffer = new BufferedOutputStream(arq);
 			ObjectOutput output = new ObjectOutputStream(buffer);
 			output.writeObject(state);
