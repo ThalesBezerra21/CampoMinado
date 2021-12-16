@@ -93,7 +93,8 @@ public class TelaJogo {
 						telaMestre.criarVitoria(this.pontuacao);
 						telaMestre.deleteSavedJogo();
 					}else {
-						telaMestre.changeEstado("Derrota");
+						//telaMestre.changeEstado("Derrota");
+						telaMestre.criarVitoria(this.pontuacao);
 						telaMestre.deleteSavedJogo();
 					}
 					

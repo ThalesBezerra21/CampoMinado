@@ -26,4 +26,8 @@ public class Main extends PApplet {
     public void mouseClicked(){
     	telaMestre.mouseClicked();
     }
+    
+    public void keyPressed() {
+    	telaMestre.keyPressed();
+    }
 }

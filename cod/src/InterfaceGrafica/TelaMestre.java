@@ -162,6 +162,13 @@ public class TelaMestre {
     	 loadBackground();
     }
     
+    public void keyPressed() {
+    	switch(this.estado) {
+    		case "Vitoria":
+    			telaVitoria.keyPressed();
+    	}
+    }
+    
     public void playMusic(String path) {
     	player = minim.loadFile(path);
     	player.loop(); 
