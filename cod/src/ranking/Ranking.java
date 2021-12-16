@@ -1,63 +1,61 @@
 package ranking;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
 
 import exeption.InputInvalidaExeption;
+import processing.core.*;
+import processing.data.Table;
+import processing.data.TableRow;
 
 public class Ranking{
-	 
-    private File aqrTXT;
-    
-    public Ranking(Pessoa p) {
-    	try {
-			aqrTXT = new File("./Ranking.txt");
 
-			if (!aqrTXT.exists()) {
-				aqrTXT.createNewFile();	
-				aqrTXT = new File("./Ranking.txt");
-			}			
+    private PApplet app;
+    private Table table;
+    private File arquivo;
+    
+    public Ranking(PApplet app) {
+    	this.app = app;
+    	
+    	try {
+    		this.arquivo = new File("data/ranking.csv");
+
+			if (!arquivo.exists()) {
+				arquivo.createNewFile();
+				criarColunas();
+			}
+			
+			this.table = app.loadTable("data/ranking.csv", "header");
 		} catch (IOException io) {
 			io.printStackTrace();
 			throw new InputInvalidaExeption("Esse arquivo não existe");
 		}
-    	criarRanking(p);
-    	
-    	
     }
-        
-    public void criarRanking(Pessoa p) {
-
-            try {
-                
-                BufferedWriter fileWriter = new BufferedWriter( new FileWriter(aqrTXT, true));
-                PrintWriter pW = new PrintWriter(fileWriter);
-                pW.print(p.getNome()+" ("+p.getPontuacao()+") ");
-                pW.flush();
-                pW.close();
-            } catch (IOException e) {
-            	e.printStackTrace();
-            }
-        }
-        private File lerRanking() {
-
-            try {
-            	
-                FileReader fileReader = new FileReader(aqrTXT);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-               
-                String linha = "";                
-                while ( ( linha = bufferedReader.readLine() ) != null) {
-                //System.out.println(linha);
-            }
-                fileReader.close();
-                bufferedReader.close();
-        	} catch (IOException e) {
-            	e.printStackTrace();
-            }
-			return aqrTXT;
-        }
-        
+    
+    public void criarColunas() {
+    	  table = new Table();
+    	  
+    	  table.addColumn("id", Table.INT);
+    	  table.addColumn("nome");
+    	  table.addColumn("pontuacao", Table.INT);
+    	  
+    	  app.saveTable(table, "data/ranking.csv");
+    }
+    
+    public void adicionarEntrada(Pessoa pessoa) {
+    	TableRow newRow = this.table.addRow();
+    	newRow.setInt("id", table.getRowCount());
+    	newRow.setString("nome", pessoa.getNome());
+    	newRow.setInt("pontuacao", pessoa.getPontuacao());
+    	
+    	table.sortReverse("pontuacao");
+    	app.saveTable(table, "data/ranking.csv");
+    	this.table = app.loadTable("data/ranking.csv", "header");
+    }
+   
+    public Table getTable() {
+    	return this.table;
+    }
  }
 
 
